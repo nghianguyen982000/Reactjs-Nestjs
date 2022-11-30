@@ -1,4 +1,3 @@
-import React from "react";
 import BackgroundAuth from "../../Assets/img/backgroundAuth.jpg";
 import imgLogin from "../../Assets/img/login.png";
 import { Link } from "react-router-dom";
@@ -21,9 +20,24 @@ const Login = () => {
         <div className="flex-[50%]">
           <div className="text-[35px] font-bold mb-[15px]">LOGIN</div>
           <form className="flex flex-col">
-            <input type="text" />
-            <input type="password" />
-            <button type="submit">Submit</button>
+            <input
+              type="text"
+              className="h-[40px] outline-transparent "
+              placeholder="User name"
+            />
+            <hr className="mb-[15px]" />
+            <input
+              type="password"
+              className="h-[40px] outline-transparent"
+              placeholder="Password"
+            />
+            <hr className="mb-[30px]" />
+            <button
+              type="submit"
+              className="h-[35px] w-[100px] bg-[#1890ff] text-[#fff] "
+            >
+              Login
+            </button>
           </form>
         </div>
       </div>
