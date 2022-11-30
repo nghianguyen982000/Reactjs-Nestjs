@@ -1,6 +1,12 @@
 import BackgroundAuth from "../../Assets/img/backgroundAuth.jpg";
 import imgLogin from "../../Assets/img/login.png";
 import { Link } from "react-router-dom";
+import * as yup from "yup";
+
+const schemaLogin = yup.object().shape({
+  user_name: yup.string().required(),
+  password: yup.string().required().min(6),
+});
 
 const Login = () => {
   return (
