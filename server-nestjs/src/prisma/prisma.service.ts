@@ -9,7 +9,6 @@ export class PrismaService extends PrismaClient{
         super({
             datasources: {
                 db:{
-                    //we need to secure this !
                     url: 'postgresql://postgres:password1234@localhost:5432/postgres?schema=public'
                                        
                 }

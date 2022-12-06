@@ -35,7 +35,18 @@ export class AuthService {
             }                 
         }
     }
-    login(){
+    async login(authDto:AuthDto){
+        const user = await this.prismaService
+                        .user.findUnique({
+                            where: {
+                                email: authDto.email
+                            }
+                        })
+        if(!user) {
+            throw new ForbiddenException(
+                'User not found'
+            )
+        }   
         return {
             message: "Login"
         }
