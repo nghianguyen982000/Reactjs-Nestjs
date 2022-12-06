@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { User } from '@prisma/client'
 import { PrismaService } from "../prisma/prisma.service";
 import { AuthDto } from "./dto";
@@ -12,15 +12,28 @@ export class AuthService {
     }
     async register(authDto:AuthDto){
         const hashedPassword= await argon.hash(authDto.password)
-        const user = await this.prismaService.user.create({
-            data: {
-                email: authDto.email,
-                hashedPassword: hashedPassword,
-                firstName: '',
-                lastName: '',
-            }
-        })
-        return user
+        try {
+            const user = await this.prismaService.user.create({
+                data: {
+                    email: authDto.email,
+                    hashedPassword: hashedPassword,
+                    firstName: '',
+                    lastName: '',
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    createdAt: true
+                }
+            })
+            return user
+        } catch (error) {
+            if(error.code == 'P2002') {
+                throw new ForbiddenException(
+                    'User with this email already exists'
+                )
+            }                 
+        }
     }
     login(){
         return {
