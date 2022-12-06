@@ -3,7 +3,9 @@ Content-Type: application/json
 
 {
     "email":"adsa@gmail.com",
-    "password":"147258369"
+    "password":"147258369",
+    "firstName":"nghia",
+    "lastname":"nghia"
 }
 
 ###
