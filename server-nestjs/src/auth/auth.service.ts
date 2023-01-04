@@ -7,6 +7,9 @@ import { AuthDto } from "./dto";
 import * as argon from 'argon2';
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { HttpException } from "@nestjs/common/exceptions";
+import { HttpStatus } from "@nestjs/common/enums";
+import { RegisterDto } from "./dto/register.dto";
 @Injectable()
 export class AuthService {
     constructor(
@@ -16,15 +19,16 @@ export class AuthService {
         ) { 
 
     }
-    async register(authDto:AuthDto){
-        const hashedPassword= await argon.hash(authDto.password)
+    async register(registerDto:RegisterDto){
+        const hashedPassword= await argon.hash(registerDto.password)
         try {
             const user = await this.prismaService.user.create({
                 data: {
-                    email: authDto.email,
+                    email: registerDto.email,
                     hashedPassword: hashedPassword,
-                    firstName: '',
-                    lastName: '',
+                    nameAccount: registerDto.nameAccount,
+                    userName: registerDto.userName,
+                    role: registerDto.role,
                 },
                 select: {
                     id: true,
@@ -32,12 +36,20 @@ export class AuthService {
                     createdAt: true
                 }
             })
-            return await this.signJwtToken(user.id, user.email) 
+            const accessToken=await this.signJwtToken(user.id, user.email)
+            return  {
+                accessToken,
+                success:true,
+                message:'User created successfully'
+            }
         } catch (error) {
             if(error.code == 'P2002') {
-                throw new ForbiddenException(
-                    'User with this email already exists'
-                )
+                throw new HttpException({
+                    statusCode: HttpStatus.FORBIDDEN,
+                    message: "User with this userName already exists",
+                    error: 'Forbidden',
+                    success:false
+                  }, HttpStatus.FORBIDDEN);
             }                 
         }
     }
@@ -45,7 +57,7 @@ export class AuthService {
         const user = await this.prismaService
                         .user.findUnique({
                             where: {
-                                email: authDto.email
+                                userName:authDto.userName
                             }
                         })
         if(!user) {
@@ -60,7 +72,14 @@ export class AuthService {
             )
         }
         delete user.hashedPassword
-        return await this.signJwtToken(user.id, user.email) 
+        const accessToken=await this.signJwtToken(user.id, user.userName)
+        return  {
+            success: true,
+            message: "User logged in successfully",
+            accessToken, 
+            role:user.role,
+            user
+        }
     }
     async signJwtToken(userId: number, email: string)
         :Promise<{accessToken: string}>{
