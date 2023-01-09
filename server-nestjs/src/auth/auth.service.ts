@@ -61,7 +61,9 @@ export class AuthService {
                             }
                         })
         if(!user) {
-            throw new  ()
+            throw new ForbiddenException(
+                'User not found'
+            )
         }   
         const passwordMatched= await argon.verify(user.hashedPassword,authDto.password)
         if(!passwordMatched){
