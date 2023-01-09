@@ -14,12 +14,24 @@ POST http://localhost:5001/auth/login
 Content-Type: application/json
 
 {
-    "userName":"nghia",
+    "userName":"nghia1",
     "password":"147258369"
 }
 
 ###
 GET http://localhost:5001/users/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzI3ODkyMzgsImV4cCI6MTY3Mjc4OTgzOH0.akxb-F8bxz8fXhyCx8of_Wk8DvM5Dm77qw4CfNWKQbw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzI4NDMwMDMsImV4cCI6MTY3Mjg0MzYwM30.JK6zGtgFJBbl0cd-_Go2lsFI9bYsgYX9a8SJ-Uvw66M
 
+###
+POST  http://localhost:5001/courses
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzI4NDQ0MDksImV4cCI6MTY3Mjg1MDQwOX0.TjIdPNkNpwYrJoWrbK75AR3LHFBNBFxNS9YHE48iPww
+
+{
+    "title": "string",
+    "description":"string",
+    "image": "string",
+    "benifit": "string",
+    "field": "string"
+}

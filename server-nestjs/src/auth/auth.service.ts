@@ -61,9 +61,7 @@ export class AuthService {
                             }
                         })
         if(!user) {
-            throw new ForbiddenException(
-                'User not found'
-            )
+            throw new  ()
         }   
         const passwordMatched= await argon.verify(user.hashedPassword,authDto.password)
         if(!passwordMatched){
@@ -88,7 +86,7 @@ export class AuthService {
             email
         }
         const jwtString = await this.jwtService.signAsync(payload, {
-            expiresIn: '10m',
+            expiresIn: '100m',
             secret: this.configService.get('JWT_SECRET')
         })
         return {
