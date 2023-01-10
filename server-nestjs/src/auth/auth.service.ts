@@ -61,15 +61,21 @@ export class AuthService {
                             }
                         })
         if(!user) {
-            throw new ForbiddenException(
-                'User not found'
-            )
+            throw new HttpException({
+                statusCode: HttpStatus.NOT_FOUND,
+                message: "User not found",
+                error: 'Not found',
+                success:false
+              }, HttpStatus.NOT_FOUND);
         }   
         const passwordMatched= await argon.verify(user.hashedPassword,authDto.password)
         if(!passwordMatched){
-            throw new ForbiddenException(
-                'Incorrect password'
-            )
+            throw new HttpException({
+                statusCode: HttpStatus.BAD_REQUEST,
+                message: "Incorrect password",
+                error: 'Bad request',
+                success:false
+              }, HttpStatus.BAD_REQUEST);
         }
         delete user.hashedPassword
         const accessToken=await this.signJwtToken(user.id, user.userName)

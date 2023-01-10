@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import {  HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { UpdateCourseDto } from "./dto";
 import { InsertCourseDto } from "./dto/insert.course.dto";
@@ -14,33 +14,58 @@ export class CourseService{
                 }
             })
             if(!course){
-                throw new ForbiddenException(
-                    'Failfully'
-                )
+                throw new HttpException({
+                    statusCode: HttpStatus.BAD_REQUEST,
+                    message: "Fail",
+                    error: 'Bad request',
+                    success:false
+                  }, HttpStatus.BAD_REQUEST);
             }
-            return course
+            return {
+                success:true,
+                message: 'Successfully!!!',
+                course
+            }
     }
    async getCourses(){
             const courses=await this.prismaService.course.findMany()
             if(!courses){
-                throw new ForbiddenException(
-                    'Failfully'
-                )
+                throw new HttpException({
+                    statusCode: HttpStatus.NOT_FOUND,
+                    message: "Fail",
+                    error: 'Not found',
+                    success:false
+                  }, HttpStatus.NOT_FOUND);
             }
-            return courses
+            const listField = courses.map((item) => (item.field))
+            let newListField = []
+            newListField = listField.filter((item) => {
+                return newListField.includes(item) ? '' : newListField.push(item)
+            })
+            return {
+                success:true,
+                data:courses,
+                listField:newListField
+            }
     }
    async getCourse(courseId:number){
-            const courses=await this.prismaService.course.findFirst({
+            const course=await this.prismaService.course.findFirst({
                 where:{
                     id:courseId
                 }
             })
-            if(!courses){
-                throw new ForbiddenException(
-                    'Failfully'
-                )
+            if(!course){
+                throw new HttpException({
+                    statusCode: HttpStatus.NOT_FOUND,
+                    message: "Course not found",
+                    error: 'Not found',
+                    success:false
+                  }, HttpStatus.NOT_FOUND);
             }
-            return courses
+            return {
+                success:true,
+                course
+            }
     }
    async updateCourse(courseId:number,updateCourse:UpdateCourseDto){
             const course=await this.prismaService.course.findUnique({
@@ -49,16 +74,24 @@ export class CourseService{
                 }
             })
             if(!course){
-                throw new ForbiddenException(
-                    'Cannot find Note to update'
-                )
+                throw new HttpException({
+                    statusCode: HttpStatus.NOT_FOUND,
+                    message: "Cannot find Course to update",
+                    error: 'Not found',
+                    success:false
+                  }, HttpStatus.NOT_FOUND);
             }
-            return this.prismaService.course.update({
+            const newCourse=await this.prismaService.course.update({
                 where: {
                     id: courseId
                 },
                 data: {...updateCourse}
             })
+            return{
+                success: true,
+                message: 'Excellent progress',
+                course: newCourse
+            }
     }
    async deleteCourse(courseId:number){
             const course=await this.prismaService.course.findUnique({
@@ -67,14 +100,21 @@ export class CourseService{
                 }
             })
             if(!course){
-                throw new ForbiddenException(
-                    'Cannot find Note to delete'
-                )
+                throw new HttpException({
+                    statusCode: HttpStatus.NOT_FOUND,
+                    message: "Cannot find Course to delete",
+                    error: 'Not found',
+                    success:false
+                  }, HttpStatus.NOT_FOUND);
             }
-            return this.prismaService.course.delete({
+            const courseDeleted=await this.prismaService.course.delete({
                 where: {
                     id: courseId
                 }
             })
+            return {
+                success: true,
+                course: courseDeleted
+            }
     }
 }

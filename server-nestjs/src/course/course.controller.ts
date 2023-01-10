@@ -31,10 +31,9 @@ export class CourseController {
     updateCourse(@Param('id',ParseIntPipe) courseId:number,@Body() updateCourse:UpdateCourseDto ) {
         return this.courseService.updateCourse(courseId,updateCourse)
     } 
-
-    @HttpCode(HttpStatus.NO_CONTENT)
     @Delete()    
     deleteCourse(@Query('id', ParseIntPipe) courseId: number){        
         return this.courseService.deleteCourse(courseId)
     } 
+
 }
