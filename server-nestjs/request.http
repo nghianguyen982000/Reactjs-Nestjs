@@ -21,12 +21,12 @@ Content-Type: application/json
 ###
 GET http://localhost:5001/users/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzMzMjQ3OTUsImV4cCI6MTY3MzMzMDc5NX0.gOq7-fm05eNlhNR424DV2O8Ux0BhYR1PNhdFoVrzxPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM0MTY4OTksImV4cCI6MTY3MzQyMjg5OX0.HHTiVulWZPAE0Ol9vntVJxm4r6horvou8tMsvNq7QpM
 
 ###
 POST  http://localhost:5001/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzMzMjQ3OTUsImV4cCI6MTY3MzMzMDc5NX0.gOq7-fm05eNlhNR424DV2O8Ux0BhYR1PNhdFoVrzxPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM0MTY4OTksImV4cCI6MTY3MzQyMjg5OX0.HHTiVulWZPAE0Ol9vntVJxm4r6horvou8tMsvNq7QpM
 
 {
     "title": "string",
@@ -39,18 +39,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 GET  http://localhost:5001/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzMzMjQ3OTUsImV4cCI6MTY3MzMzMDc5NX0.gOq7-fm05eNlhNR424DV2O8Ux0BhYR1PNhdFoVrzxPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM0MTY4OTksImV4cCI6MTY3MzQyMjg5OX0.HHTiVulWZPAE0Ol9vntVJxm4r6horvou8tMsvNq7QpM
 
 ###
 GET  http://localhost:5001/courses/7
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzMzMjQ3OTUsImV4cCI6MTY3MzMzMDc5NX0.gOq7-fm05eNlhNR424DV2O8Ux0BhYR1PNhdFoVrzxPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM0MTY4OTksImV4cCI6MTY3MzQyMjg5OX0.HHTiVulWZPAE0Ol9vntVJxm4r6horvou8tMsvNq7QpM
 
 
 ###
 PATCH   http://localhost:5001/courses/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzMzMjQ3OTUsImV4cCI6MTY3MzMzMDc5NX0.gOq7-fm05eNlhNR424DV2O8Ux0BhYR1PNhdFoVrzxPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM0MTY4OTksImV4cCI6MTY3MzQyMjg5OX0.HHTiVulWZPAE0Ol9vntVJxm4r6horvou8tMsvNq7QpM
 
 {
     "title": "string1",
@@ -63,4 +63,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 DELETE   http://localhost:5001/courses?id=4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzMzMjQ3OTUsImV4cCI6MTY3MzMzMDc5NX0.gOq7-fm05eNlhNR424DV2O8Ux0BhYR1PNhdFoVrzxPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM0MTY4OTksImV4cCI6MTY3MzQyMjg5OX0.HHTiVulWZPAE0Ol9vntVJxm4r6horvou8tMsvNq7QpM

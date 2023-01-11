@@ -21,4 +21,6 @@ export class InsertCourseDto{
     @IsString()
     @IsOptional()
     field: string
+
+    file:File
 }

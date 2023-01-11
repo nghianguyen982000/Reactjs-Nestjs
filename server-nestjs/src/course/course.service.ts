@@ -1,13 +1,16 @@
 /* eslint-disable prettier/prettier */
 import {  HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ClouldinaryService } from "src/clouldinary/clouldinary.service";
 import { PrismaService } from "src/prisma/prisma.service";
 import { UpdateCourseDto } from "./dto";
 import { InsertCourseDto } from "./dto/insert.course.dto";
 
 @Injectable()
 export class CourseService{
-    constructor(private prismaService:PrismaService){}
+    constructor(private prismaService:PrismaService,private clouldinaryService:ClouldinaryService){}
    async insertCourse(insertCourse:InsertCourseDto){
+            this.clouldinaryService.uploadImage(insertCourse.file)
+            console.log(insertCourse)
             const course=await this.prismaService.course.create({
                 data:{
                     ...insertCourse
