@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -28,6 +29,17 @@ model Course{
   image String
   benifit String 
   field String
+  video Video[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Video{
+  id Int @id @default(autoincrement())
+  chapter String
+  lesson String
+  title String
+  url String
+  courseId Int
+  course  Course @relation(fields: [courseId], references: [id])
 }

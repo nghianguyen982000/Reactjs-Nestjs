@@ -2,21 +2,21 @@
 import {  HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { ClouldinaryService } from "src/clouldinary/clouldinary.service";
 import { PrismaService } from "src/prisma/prisma.service";
-import { UpdateCourseDto } from "./dto";
-import { InsertCourseDto } from "./dto/insert.course.dto";
+import { UpdateVideoDto } from "./dto";
+import { InsertVideoDto } from "./dto/insert.video.dto";
 
 @Injectable()
-export class CourseService{
+export class VideoService{
     constructor(private prismaService:PrismaService,private clouldinaryService:ClouldinaryService){}
-   async insertCourse(insertCourse:InsertCourseDto,file:Express.Multer.File){
+   async insertVideo(insertVideo:InsertVideoDto,file:Express.Multer.File){
            const image=await this.clouldinaryService.uploadImage(file)
-            const course=await this.prismaService.course.create({
+            const video=await this.prismaService.video.create({
                 data:{
-                    ...insertCourse,
-                    image:image.url
+                    ...insertVideo,
+                    url:image.url
                 }
             })
-            if(!course){
+            if(!video){
                 throw new HttpException({
                     statusCode: HttpStatus.BAD_REQUEST,
                     message: "Fail",
@@ -27,12 +27,12 @@ export class CourseService{
             return {
                 success:true,
                 message: 'Successfully!!!',
-                course
+                video
             }
     }
-   async getCourses(){
-            const courses=await this.prismaService.course.findMany()
-            if(!courses){
+   async getVideos(){
+            const videos=await this.prismaService.video.findMany()
+            if(!videos){
                 throw new HttpException({
                     statusCode: HttpStatus.NOT_FOUND,
                     message: "Fail",
@@ -40,84 +40,79 @@ export class CourseService{
                     success:false
                   }, HttpStatus.NOT_FOUND);
             }
-            const listField = courses.map((item) => (item.field))
-            let newListField = []
-            newListField = listField.filter((item) => {
-                return newListField.includes(item) ? '' : newListField.push(item)
-            })
+            
             return {
                 success:true,
-                data:courses,
-                listField:newListField
+                data:videos,
             }
     }
-   async getCourse(courseId:number){
-            const course=await this.prismaService.course.findFirst({
+   async getVideo(videoId:number){
+            const video=await this.prismaService.video.findFirst({
                 where:{
-                    id:courseId
+                    id:videoId
                 }
             })
-            if(!course){
+            if(!video){
                 throw new HttpException({
                     statusCode: HttpStatus.NOT_FOUND,
-                    message: "Course not found",
+                    message: "Video not found",
                     error: 'Not found',
                     success:false
                   }, HttpStatus.NOT_FOUND);
             }
             return {
                 success:true,
-                course
+                video
             }
     }
-   async updateCourse(courseId:number,updateCourse:UpdateCourseDto){
-            const course=await this.prismaService.course.findUnique({
+   async updateVideo(videoId:number,updateVideo:UpdateVideoDto){
+            const video=await this.prismaService.video.findUnique({
                 where:{
-                    id:courseId
+                    id:videoId
                 }
             })
-            if(!course){
+            if(!video){
                 throw new HttpException({
                     statusCode: HttpStatus.NOT_FOUND,
-                    message: "Cannot find Course to update",
+                    message: "Cannot find Video to update",
                     error: 'Not found',
                     success:false
                   }, HttpStatus.NOT_FOUND);
             }
-            const newCourse=await this.prismaService.course.update({
+            const newVideo=await this.prismaService.video.update({
                 where: {
-                    id: courseId
+                    id: videoId
                 },
-                data: {...updateCourse}
+                data: {...updateVideo}
             })
             return{
                 success: true,
                 message: 'Excellent progress',
-                course: newCourse
+                video: newVideo
             }
     }
-   async deleteCourse(courseId:number){
-            const course=await this.prismaService.course.findUnique({
+   async deleteVideo(videoId:number){
+            const video=await this.prismaService.video.findUnique({
                 where:{
-                    id:courseId
+                    id:videoId
                 }
             })
-            if(!course){
+            if(!video){
                 throw new HttpException({
                     statusCode: HttpStatus.NOT_FOUND,
-                    message: "Cannot find Course to delete",
+                    message: "Cannot find Video to delete",
                     error: 'Not found',
                     success:false
                   }, HttpStatus.NOT_FOUND);
             }
-            const courseDeleted=await this.prismaService.course.delete({
+            const videoDeleted=await this.prismaService.video.delete({
                 where: {
-                    id: courseId
+                    id: videoId
                 }
             })
             return {
                 success: true,
-                course: courseDeleted
+                video: videoDeleted
             }
     }
 }
