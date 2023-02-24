@@ -1,31 +1,38 @@
-import BackgroundAuth from "../../Assets/img/backgroundAuth.jpg";
-import imgRegister from "../../Assets/img/register.png";
+import BackgroundAuth from "../../../Assets/img/backgroundAuth.jpg";
+import imgRegister from "../../../Assets/img/register.png";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 
-interface RegisterProps{
+interface RegisterProps {
   user_name: string;
   name_account: string;
   email: string;
   password: string;
   password_confirmation: string;
 }
-const schemaRegister = yup.object().shape({  
+const schemaRegister = yup.object().shape({
   user_name: yup.string().required("Please fill in this field"),
   name_account: yup.string().required("Please fill in this field"),
   email: yup.string().email().required("Please fill in this field"),
   password: yup.string().required("Please fill in this field").min(6),
-  password_confirmation: yup.string().required("Please fill in this field").min(6),
+  password_confirmation: yup
+    .string()
+    .required("Please fill in this field")
+    .min(6),
 });
 
 const Register = () => {
-  const { register, handleSubmit ,formState: { errors }} = useForm<RegisterProps>({
-    resolver: yupResolver(schemaRegister)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterProps>({
+    resolver: yupResolver(schemaRegister),
   });
   const onSubmit = (data: RegisterProps) => {
-    console.log(data)
+    console.log(data);
   };
   return (
     <div
@@ -40,42 +47,60 @@ const Register = () => {
               type="text"
               className="h-[40px] outline-transparent "
               placeholder="User name"
-              {...register('user_name')}
+              {...register("user_name")}
             />
             <hr className="mb-[15px]" />
-            {errors.user_name && <p className="text-[red] text-[12px]">{errors.user_name.message}</p>}
+            {errors.user_name && (
+              <p className="text-[red] text-[12px]">
+                {errors.user_name.message}
+              </p>
+            )}
             <input
               type="text"
               className="h-[40px] outline-transparent "
               placeholder="Name account"
-              {...register('name_account')}
+              {...register("name_account")}
             />
             <hr className="mb-[15px]" />
-            {errors.name_account && <p className="text-[red] text-[12px]">{errors.name_account.message}</p>}
+            {errors.name_account && (
+              <p className="text-[red] text-[12px]">
+                {errors.name_account.message}
+              </p>
+            )}
             <input
               type="email"
               className="h-[40px] outline-transparent "
               placeholder="Email"
-              {...register('email')}
+              {...register("email")}
             />
             <hr className="mb-[15px]" />
-            {errors.email && <p className="text-[red] text-[12px]">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-[red] text-[12px]">{errors.email.message}</p>
+            )}
             <input
               type="password"
               className="h-[40px] outline-transparent"
               placeholder="Password"
-              {...register('password')}
+              {...register("password")}
             />
             <hr className="mb-[15px]" />
-            {errors.password && <p className="text-[red] text-[12px]">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-[red] text-[12px]">
+                {errors.password.message}
+              </p>
+            )}
             <input
               type="password"
               className="h-[40px] outline-transparent"
               placeholder="Password"
-              {...register('password_confirmation')}
+              {...register("password_confirmation")}
             />
             <hr className="mb-[15px]" />
-            {errors.password_confirmation && <p className="text-[red] text-[12px]">{errors.password_confirmation.message}</p>}
+            {errors.password_confirmation && (
+              <p className="text-[red] text-[12px]">
+                {errors.password_confirmation.message}
+              </p>
+            )}
             <button
               type="submit"
               className="h-[35px] w-[100px] bg-[#1890ff] text-[#fff] "

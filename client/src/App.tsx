@@ -1,8 +1,8 @@
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Login from './Pages/Login';
-import Register from './Pages/Register';
 import Layout from './Layout';
+import Login from './Pages/Auth/Login';
+import Register from './Pages/Auth/Register';
 
 function App() {
   return (

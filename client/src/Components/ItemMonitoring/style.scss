@@ -1,0 +1,85 @@
+.itemMonitoring{
+    height: 500px;
+    // background-position: top center;
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .itemMonitoringLeft{
+        .itemMonitoringTitle{
+            font-size: 70px;
+            font-weight: bold;
+        }
+        .itemMonitoringBtn{
+            background-color: rgb(214, 148, 42);
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 50px;
+            padding: 10px 20px;
+            color: aliceblue;
+            border-radius: 5px;
+            text-align: center;
+            max-width: 250px;
+            // border-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform linear 0.2s;
+            will-change: transform;
+            &:hover{
+                box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+                transform: translateY(-2px)
+            }
+        }
+    }
+    .itemMonitoringRight{
+        img{
+            width: 100%;
+        }
+    }
+}
+@media (min-width:768px) and (max-width     : 1199.98px) {
+    .itemMonitoring{
+        .itemMonitoringLeft{
+            flex: 1.5;
+            .itemMonitoringTitle{
+                font-size: 50px;
+            }
+        }
+        .itemMonitoringRight{
+            flex: 2;
+        }
+    }
+}
+
+@media (max-width: 767.98px) {
+    .itemMonitoring{
+        height: 100%;
+        flex-flow: column-reverse;
+        .itemMonitoringLeft{
+            text-align: center;
+            .itemMonitoringTitle{
+                font-size: 40px;
+            }
+            .itemMonitoringBtn{
+                margin: auto;
+            }
+        }
+        .itemMonitoringRight{
+            
+        }
+    }
+
+}
+.steps-content {
+    min-height: 200px;
+    margin-top: 16px;
+    padding: 30px;
+    background-color: #fafafa;
+    border: 1px dashed #e9e9e9;
+    border-radius: 2px;
+  }
+  
+  .steps-action {
+    margin-top: 24px;
+  }
