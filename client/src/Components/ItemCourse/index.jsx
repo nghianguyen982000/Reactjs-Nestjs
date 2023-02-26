@@ -5,17 +5,16 @@ import { useNavigate } from "react-router-dom";
 const ItemCourse = () => {
   const navigate = useNavigate();
   return (
-    <div className={"itemCourseHome"}>
-      <div className="itemCoursePicture" style={{ backgroundImage: `url()` }}>
+    <div className="itemCourse">
+      <div
+        className="itemCoursePicture"
+        style={{
+          backgroundImage: `url(	https://files.fullstack.edu.vn/f8-prod/courses/7.png)`,
+        }}
+      >
         <div
           className="itemCoursePictureAc"
-          onClick={() => navigate(`/learning`)}
-        >
-          Tiếp tục học
-        </div>
-        <div
-          className="itemCoursePictureAc"
-          onClick={() => navigate(`/detail`)}
+          onClick={() => navigate(`/course/1`)}
         >
           Xem khóa học
         </div>

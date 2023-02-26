@@ -6,9 +6,8 @@ const ItemMonitoring = () => {
     <div className="itemMonitoring">
       <div className="itemMonitoringLeft">
         <div className="itemMonitoringTitle">
-          Giám sát quá trình làm việc của bạn
+          Chuc ban hoc tap va lam viec hieu qua
         </div>
-        <div className="itemMonitoringBtn">Bắt đầu giám sát</div>
       </div>
       <div className="itemMonitoringRight">
         <img src={imgWork} alt="" />

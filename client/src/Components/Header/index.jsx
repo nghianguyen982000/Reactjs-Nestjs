@@ -9,17 +9,30 @@ import {
   HomeOutlined,
   KeyOutlined,
   LogoutOutlined,
-  IdcardOutlined,
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import { Drawer } from "antd";
+import { useState } from "react";
 
 const Header = () => {
+  const [btnUser, setBtnUser] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [btnCourse, setBtnCourse] = useState(false);
+  const [btnFavorite, setBtnFavorite] = useState(false);
+  const onClose = () => {
+    setVisible(false);
+  };
   return (
     <div className="header">
-      <Drawer placement="left" className="headerDrawer" closable={false}>
+      <Drawer
+        placement="left"
+        className="headerDrawer"
+        closable={false}
+        onClose={onClose}
+        visible={visible}
+      >
         <div className="headerAccountDrawer">
           <div className="UserAuthProfile">
             <div className="AuthProfileLogo">
@@ -54,10 +67,6 @@ const Header = () => {
         {
           <div className="headerDrawerFooter">
             <div className="headerAccountDrawerItem">
-              <IdcardOutlined />
-              <span> Trang cá nhân</span>
-            </div>
-            <div className="headerAccountDrawerItem">
               <KeyOutlined />
               <span> Đổi mật khẩu</span>
             </div>
@@ -77,9 +86,6 @@ const Header = () => {
         </div>
         <div className="headerMenu">
           <NavLink to="/">Trang chủ</NavLink>
-          {/* <NavLink to="/monitoring" >
-            Giám sát
-          </NavLink> */}
           <NavLink to="/course">Các khóa học</NavLink>
         </div>
       </div>
@@ -94,60 +100,82 @@ const Header = () => {
         </div>
       </div>
       <div className="headerRight">
-        {
-          <div className="headerAuth">
-            <p>Đăng nhập</p>
-          </div>
-        }
+        {/* <div className="headerAuth">
+          <p>Đăng nhập</p>
+        </div> */}
         {
           <div className="headerUser">
             <div className="headerUserResp">
               <UserOutlined />
             </div>
             <div className="headerUserIcon">
-              <ReadOutlined />
-              <div className="headerUserCourse">
-                <div className="userCourseHeader">Khóa học của tôi</div>
-                <div className="userCourseContent">
-                  <div className="userCourseItem">
-                    <div className="CourseItemImg"></div>
-                    <div className="CourseItemTitle">title</div>
+              <ReadOutlined
+                onClick={() => {
+                  setBtnCourse(!btnCourse);
+                  setBtnFavorite(false);
+                  setBtnUser(false);
+                }}
+              />
+              {btnCourse && (
+                <div className="headerUserCourse">
+                  <div className="userCourseHeader">Khóa học của tôi</div>
+                  <div className="userCourseContent">
+                    <div className="userCourseItem">
+                      <div className="CourseItemImg"></div>
+                      <div className="CourseItemTitle">title</div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="headerUserIcon">
-              <HeartOutlined />
-              <div className="headerUserCourse">
-                <div className="userCourseHeader">Khóa học yêu thích</div>
-                <div className="userCourseContent">
-                  <div className="userCourseItem">
-                    <div className="CourseItemImg"></div>
-                    <div className="CourseItemTitle">title</div>
+              <HeartOutlined
+                onClick={() => {
+                  setBtnFavorite(!btnFavorite);
+                  setBtnCourse(false);
+                  setBtnUser(false);
+                }}
+              />
+              {btnFavorite && (
+                <div className="headerUserCourse">
+                  <div className="userCourseHeader">Khóa học yêu thích</div>
+                  <div className="userCourseContent">
+                    <div className="userCourseItem">
+                      <div className="CourseItemImg"></div>
+                      <div className="CourseItemTitle">title</div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="headerUserLogo">
-              <div className="AuthProfileLogo">
+              <div
+                className="AuthProfileLogo"
+                onClick={() => {
+                  setBtnFavorite(false);
+                  setBtnCourse(false);
+                  setBtnUser(!btnUser);
+                }}
+              >
                 <img src={LogoAD} alt="" />
               </div>
-              <div className="headerUserAuth">
-                <div className="UserAuthProfile">
-                  <div className="AuthProfileLogo">
-                    <img src={LogoAD} alt="" />
+              {btnUser && (
+                <div className="headerUserAuth">
+                  <div className="UserAuthProfile">
+                    <div className="AuthProfileLogo">
+                      <img src={LogoAD} alt="" />
+                    </div>
+                    <div className="AuthProfileName">
+                      <p></p>
+                      <p>coin</p>
+                    </div>
                   </div>
-                  <div className="AuthProfileName">
-                    <p></p>
-                    <p>coin</p>
+                  <div className="UserAuthContent">
+                    <p>Đổi mật khẩu</p>
+                    <p>Đăng xuất</p>
                   </div>
                 </div>
-                <div className="UserAuthContent">
-                  <p>Trang cá nhân</p>
-                  <p>Đổi mật khẩu</p>
-                  <p>Đăng xuất</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         }
