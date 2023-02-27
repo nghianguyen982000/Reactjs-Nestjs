@@ -1,12 +1,11 @@
 import { createContext, ReactNode, useReducer } from 'react'
-import { MusicActionType, musicReducer, MusicState } from '../reducer/music'
-import { Music } from '../service/music'
+import { MusicActionType } from './reducer'
 
 interface MusicContextProps {
 	children: ReactNode
 }
 
-const { TOGGLE_MUSIC ,SET_TRACK_INDEX} = MusicActionType
+const { LOGIN ,REGISTER} = MusicActionType
 
 interface MusicContextDefault {
 	music: MusicState

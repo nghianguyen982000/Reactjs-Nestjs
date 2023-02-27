@@ -1,31 +1,19 @@
+import { Account } from "../Types/Model/account";
 
 export enum MusicActionType {
-    TOGGLE_MUSIC = 'TOGGLE_MUSIC',
-    SET_TRACK_INDEX = 'SET_TRACK_INDEX',
+  LOGIN = "LOGIN",
+  REGISTER = "REGISTER",
 }
-type MusicAction = { type: MusicActionType; payload:{music?:Music[],index?:number}}
+type AuthAction = { type: MusicActionType; payload: {} };
 
-export interface MusicState {
-    listMusic?: Music[],
-	index?:number
+export interface AuthState {
+  currentAcount: Account;
 }
 
-const { TOGGLE_MUSIC ,SET_TRACK_INDEX} = MusicActionType
-
-export const musicReducer = (state: MusicState, action: MusicAction) => {
-    const { type, payload } = action
-    switch (type) {
-		case TOGGLE_MUSIC:
-			return {
-				...state,
-                listMusic:payload.music
-			}
-		case SET_TRACK_INDEX:
-			return {
-				...state,
-                index:payload.index
-			}
-		default:
-			return state
-	}
-}
+export const musicReducer = (state: AuthState, action: AuthAction) => {
+  const { type, payload } = action;
+  switch (type) {
+    default:
+      return state;
+  }
+};
