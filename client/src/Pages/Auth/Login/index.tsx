@@ -1,17 +1,21 @@
 import BackgroundAuth from "../../../Assets/img/backgroundAuth.jpg";
 import imgLogin from "../../../Assets/img/login.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "../../../Store/Contexts/AuthContext";
+import { notification } from "antd";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 const schemaLogin = yup.object().shape({
-  user_name: yup.string().required("Please fill in this field"),
+  userName: yup.string().required("Please fill in this field"),
   password: yup.string().required("Please fill in this field").min(6),
 });
 
 interface LoginProps {
-  user_name: string;
+  userName: string;
   password: string;
 }
 const Login = () => {
@@ -22,8 +26,18 @@ const Login = () => {
   } = useForm<LoginProps>({
     resolver: yupResolver(schemaLogin),
   });
-  const onSubmit = (data: LoginProps) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+  const onSubmit = async (data: LoginProps) => {
+    const resp = await login(data);
+    if (resp) {
+      navigate("/");
+    } else {
+      notification.open({
+        message: "Sai tài khoản hoặc mật khẩu",
+        icon: <CloseCircleOutlined style={{ color: "red" }} />,
+      });
+    }
   };
   return (
     <div
@@ -46,12 +60,12 @@ const Login = () => {
               type="text"
               className="h-[40px] outline-transparent "
               placeholder="User name"
-              {...register("user_name")}
+              {...register("userName")}
             />
             <hr className="mb-[15px]" />
-            {errors.user_name && (
+            {errors.userName && (
               <p className="text-[red] text-[12px]">
-                {errors.user_name.message}
+                {errors.userName.message}
               </p>
             )}
             <input

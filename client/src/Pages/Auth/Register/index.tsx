@@ -1,9 +1,13 @@
 import BackgroundAuth from "../../../Assets/img/backgroundAuth.jpg";
 import imgRegister from "../../../Assets/img/register.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "../../../Store/Contexts/AuthContext";
+import { notification } from "antd";
+import { CloseCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
 interface RegisterProps {
   user_name: string;
@@ -20,7 +24,7 @@ const schemaRegister = yup.object().shape({
   password_confirmation: yup
     .string()
     .required("Please fill in this field")
-    .min(6),
+    .oneOf([yup.ref("password"), null], "Confirm password does not match"),
 });
 
 const Register = () => {
@@ -31,8 +35,28 @@ const Register = () => {
   } = useForm<RegisterProps>({
     resolver: yupResolver(schemaRegister),
   });
-  const onSubmit = (data: RegisterProps) => {
-    console.log(data);
+  const navigate = useNavigate();
+  const { signup } = useContext(AuthContext);
+  const onSubmit = async (data: RegisterProps) => {
+    const resp = await signup({
+      email: data.email,
+      password: data.password,
+      nameAccount: data.name_account,
+      userName: data.user_name,
+      role: "user",
+    });
+    if (resp) {
+      notification.open({
+        message: "Đăng ký thành công",
+        icon: <CheckCircleOutlined style={{ color: "green" }} />,
+      });
+      navigate("/login");
+    } else {
+      notification.open({
+        message: "Đăng ký thất bại",
+        icon: <CloseCircleOutlined style={{ color: "red" }} />,
+      });
+    }
   };
   return (
     <div

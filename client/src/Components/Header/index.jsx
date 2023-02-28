@@ -12,15 +12,18 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Drawer } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Store/Contexts/AuthContext";
 
 const Header = () => {
   const [btnUser, setBtnUser] = useState(false);
   const [visible, setVisible] = useState(false);
   const [btnCourse, setBtnCourse] = useState(false);
   const [btnFavorite, setBtnFavorite] = useState(false);
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
   const onClose = () => {
     setVisible(false);
   };
@@ -103,7 +106,7 @@ const Header = () => {
         {/* <div className="headerAuth">
           <p>Đăng nhập</p>
         </div> */}
-        {
+        {auth.isAuthenticated ? (
           <div className="headerUser">
             <div className="headerUserResp">
               <UserOutlined />
@@ -178,7 +181,11 @@ const Header = () => {
               )}
             </div>
           </div>
-        }
+        ) : (
+          <div className="headerAuth" onClick={() => navigate("/login")}>
+            <p>Đăng nhập</p>
+          </div>
+        )}
       </div>
     </div>
   );

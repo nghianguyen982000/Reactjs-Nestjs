@@ -1,11 +1,20 @@
-import { Popconfirm, Space, Button, Select, Input } from "antd";
+import { Popconfirm, Space, Button, Select, Input, Table } from "antd";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { CourseContext } from "../../../Store/Contexts/CourseContext";
 
 const { Option } = Select;
 const { Search } = Input;
 
 const CourseAdmin = () => {
   const navigate = useNavigate();
+  const { listCourse, data } = useContext(CourseContext);
+  useEffect(() => {
+    const fetchList = async () => {
+      await listCourse();
+    };
+    fetchList();
+  }, [listCourse]);
   const columns = [
     {
       title: "STT",
@@ -19,14 +28,13 @@ const CourseAdmin = () => {
       title: "Số học viên",
       dataIndex: "",
       key: "3",
-      render: (text, record) => <div>{record.course.length}</div>,
       width: "150px",
     },
     {
       title: "Thao tác",
       dataIndex: "",
       key: "4",
-      render: (text, record) => (
+      render: () => (
         <Space size="middle">
           <Button type="primary" onClick={() => navigate("/admin/cuCourse")}>
             Xem và cập nhật
@@ -63,6 +71,15 @@ const CourseAdmin = () => {
         </Select>
         <Button type="primary">Tạo khóa học mới</Button>
       </Space>
+      <Table
+        columns={columns}
+        dataSource={data.course}
+        rowKey={(record) => record.id}
+        style={{ paddingTop: "10px" }}
+        scroll={{
+          y: 400,
+        }}
+      />
     </div>
   );
 };

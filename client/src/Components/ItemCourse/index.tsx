@@ -1,15 +1,20 @@
 import React from "react";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
+import { Course } from "../../Types/Model/course";
 
-const ItemCourse = () => {
+type Props = {
+  course: Course;
+};
+
+const ItemCourse = ({ course }: Props) => {
   const navigate = useNavigate();
   return (
     <div className="itemCourse">
       <div
         className="itemCoursePicture"
         style={{
-          backgroundImage: `url(	https://files.fullstack.edu.vn/f8-prod/courses/7.png)`,
+          backgroundImage: `url(${course.image})`,
         }}
       >
         <div
@@ -19,7 +24,7 @@ const ItemCourse = () => {
           Xem khóa học
         </div>
       </div>
-      <div className="itemCourseTitle">title</div>
+      <div className="itemCourseTitle">{course.title}</div>
     </div>
   );
 };
