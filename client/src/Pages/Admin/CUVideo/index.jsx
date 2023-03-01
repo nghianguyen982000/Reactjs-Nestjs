@@ -1,10 +1,10 @@
-import {  useParams } from "react-router-dom";
+// import {  useParams } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 import "./style.scss";
 import { Button, Form, Input, InputNumber, Upload } from "antd";
 
 const CUVideo = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [formModal] = Form.useForm();
 
   const onFinish = async (values) => {

@@ -31,7 +31,7 @@ const Login = () => {
   const onSubmit = async (data: LoginProps) => {
     const resp = await login(data);
     if (resp) {
-      navigate("/");
+      navigate("/admin/course");
     } else {
       notification.open({
         message: "Sai tài khoản hoặc mật khẩu",

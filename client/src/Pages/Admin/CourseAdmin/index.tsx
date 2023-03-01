@@ -1,4 +1,4 @@
-import { Popconfirm, Space, Button, Select, Input, Table } from "antd";
+import { Popconfirm, Space, Select, Input, Table, Button } from "antd";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CourseContext } from "../../../Store/Contexts/CourseContext";
@@ -14,7 +14,8 @@ const CourseAdmin = () => {
       await listCourse();
     };
     fetchList();
-  }, [listCourse]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const columns = [
     {
       title: "STT",
@@ -51,14 +52,14 @@ const CourseAdmin = () => {
   return (
     <div className="courseAd">
       <Space>
-        <Search
+        {/* <Search
           style={{
             width: 350,
           }}
           placeholder="Tìm kiếm khóa học"
           enterButton
-        />
-        <Select
+        /> */}
+        {/* <Select
           style={{
             width: 120,
           }}
@@ -68,7 +69,7 @@ const CourseAdmin = () => {
         >
           <Option value="All">Tất cả</Option>
           <Option>item</Option>
-        </Select>
+        </Select> */}
         <Button type="primary">Tạo khóa học mới</Button>
       </Space>
       <Table

@@ -16,6 +16,7 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import logoAd from "../../Assets/img/logoUser.png";
 import CourseAdmin from "./CourseAdmin";
 import CUVideo from "./CUVideo";
+import CUCourse from "./CUCourse";
 
 const { Header, Sider, Content } = Layout;
 
@@ -102,7 +103,8 @@ const Admin = () => {
           >
             <Routes>
               <Route path="/course" element={<CourseAdmin />} />
-              <Route path="/course/edit" element={<CUVideo />} />
+              <Route path="/course/video/edit" element={<CUVideo />} />
+              <Route path="/course/edit" element={<CUCourse />} />
             </Routes>
           </Content>
         </Layout>
