@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useReducer } from "react";
-import { fetchCourse } from "../../Api/course";
+import { fetchCourse, postCourse } from "../../Api/course";
 import {
   CourseActionType,
   courseReducer,
@@ -16,6 +16,7 @@ type Props = {
 type CourseContextDefault = {
   data: CourseState;
   listCourse: () => Promise<boolean>;
+  createCourse: (formData: FormData) => Promise<boolean>;
 };
 export const CourseContext = createContext<CourseContextDefault>(
   {} as CourseContextDefault
@@ -39,8 +40,17 @@ const CourseContextProvider = ({ children }: Props) => {
       return false;
     }
   };
+  const createCourse = async (formData: FormData) => {
+    try {
+      await postCourse(formData);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
 
-  const CourseContextData = { data, listCourse };
+  const CourseContextData = { data, listCourse, createCourse };
 
   return (
     <CourseContext.Provider value={CourseContextData}>

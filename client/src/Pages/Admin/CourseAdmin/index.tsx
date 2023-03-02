@@ -17,32 +17,19 @@ const CourseAdmin = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const columns = [
-    {
-      title: "STT",
-      dataIndex: "",
-      key: "0",
-      width: "100px",
-    },
     { title: "Tiêu đề", dataIndex: "title", key: "1", ellipsis: true },
-    { title: "Điểm", dataIndex: "point", key: "2", width: "100px" },
-    {
-      title: "Số học viên",
-      dataIndex: "",
-      key: "3",
-      width: "150px",
-    },
     {
       title: "Thao tác",
       dataIndex: "",
       key: "4",
       render: () => (
         <Space size="middle">
-          <Button type="primary" onClick={() => navigate("/admin/cuCourse")}>
+          <Button type="dashed" onClick={() => navigate("/admin/cuCourse")}>
             Xem và cập nhật
           </Button>
-          <Button type="primary">Bài giảng</Button>
+          <Button type="dashed">Bài giảng</Button>
           <Popconfirm title="Khóa học này sẽ bị xóa vĩnh viễn">
-            <Button type="primary">Xóa</Button>
+            <Button type="dashed">Xóa</Button>
           </Popconfirm>
         </Space>
       ),
@@ -70,7 +57,9 @@ const CourseAdmin = () => {
           <Option value="All">Tất cả</Option>
           <Option>item</Option>
         </Select> */}
-        <Button type="primary">Tạo khóa học mới</Button>
+        <Button type="dashed" onClick={() => navigate("/admin/course/edit")}>
+          Tạo khóa học mới
+        </Button>
       </Space>
       <Table
         columns={columns}

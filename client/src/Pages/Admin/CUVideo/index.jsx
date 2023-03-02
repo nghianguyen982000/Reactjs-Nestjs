@@ -88,7 +88,7 @@ const CUVideo = () => {
             span: 18,
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button type="dashed" htmlType="submit">
             Nộp
           </Button>
         </Form.Item>

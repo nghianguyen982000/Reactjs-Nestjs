@@ -1,34 +1,33 @@
-import React from "react";
-import { Button, Form, Input, InputNumber } from "antd";
+import React, { useContext } from "react";
+import { Button, Form, Input, Upload, UploadFile } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import { CourseContext } from "../../../Store/Contexts/CourseContext";
 
 const { TextArea } = Input;
 
 type submitCourse = {
   title: string;
   description: string;
-  image: string;
+  file: UploadFile;
   benifit: string;
   field: string;
 };
 
 const CUCourse = () => {
   const [formModal] = Form.useForm();
-
+  const { createCourse } = useContext(CourseContext);
   const onFinish = async (values: submitCourse) => {
+    const formData = new FormData();
     console.log(values);
-  };
-
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      if (
-        e.target.files[0] &&
-        e.target.files[0].size <= 3250585 &&
-        e.target.files[0].name.match(/\.(jpg|jpeg|png|gif)$/)
-      ) {
-        const file = e.target.files[0];
-        console.log(file);
-      }
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("file", values.file);
+    formData.append("benifit", values.benifit);
+    formData.append("field", values.field);
+    console.log(formData);
+    const resp = await createCourse(formData);
+    if (resp) {
+      console.log(resp);
     }
   };
   return (
@@ -71,25 +70,10 @@ const CUCourse = () => {
         >
           <TextArea rows={4} />
         </Form.Item>
-        <Form.Item label="Tải lên">
-          <Input
-            type="file"
-            name="file"
-            id="file"
-            onChange={(e) => handleFileInputChange(e)}
-            hidden
-          />
-          <label
-            htmlFor="file"
-            style={{
-              border: "1px solid #dddddd",
-              padding: "5px",
-              cursor: "pointer",
-            }}
-          >
-            <UploadOutlined />
-            Upload Image
-          </label>
+        <Form.Item label="Video" name="file">
+          <Upload beforeUpload={() => false} maxCount={1}>
+            <Button icon={<UploadOutlined />}>Select File</Button>
+          </Upload>
         </Form.Item>
         {/* <Form.Item
           label="Url hình ảnh"
@@ -112,7 +96,7 @@ const CUCourse = () => {
             span: 20,
           }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button type="dashed" htmlType="submit">
             Cập nhật
           </Button>
         </Form.Item>
