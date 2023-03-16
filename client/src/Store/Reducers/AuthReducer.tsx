@@ -2,16 +2,16 @@ import { Account } from "../../Types/Model/account";
 
 export type AuthState = {
   isAuthenticated: boolean;
-  user: Account;
+  user: Account | null;
 };
 export type AuthPayload = {
   isAuthenticated: boolean;
-  user: Account;
+  user: Account | null;
 };
 
 export enum AuthActionType {
   LOGIN = "LOGIN",
-  REGISTER = "REGISTER",
+  SET_AUTH = "SET_AUTH",
 }
 type AuthAction = { type: AuthActionType; payload: AuthPayload };
 
@@ -20,6 +20,12 @@ export const authReducer = (state: AuthState, action: AuthAction) => {
 
   switch (type) {
     case "LOGIN":
+      return {
+        ...state,
+        isAuthenticated: payload.isAuthenticated,
+        user: payload.user,
+      };
+    case "SET_AUTH":
       return {
         ...state,
         isAuthenticated: payload.isAuthenticated,

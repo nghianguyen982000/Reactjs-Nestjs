@@ -21,7 +21,6 @@ const CUCourse = () => {
     console.log(values);
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("file", values.file);
     formData.append("benifit", values.benifit);
     formData.append("field", values.field);
     console.log(formData);

@@ -17,13 +17,7 @@ export class VideoController {
     constructor( private videoService:VideoService){}
     @Post()
     @UseInterceptors(FileInterceptor('file'))
-    insertVideo(@Body() insertVideo:InsertVideoDto,@UploadedFile(new ParseFilePipeBuilder()
-    .addMaxSizeValidator({
-      maxSize: 10048576
-    })
-    .build({
-      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
-    }),) file: Express.Multer.File ) {
+    insertVideo(@Body() insertVideo:InsertVideoDto,@UploadedFile() file: Express.Multer.File ) {
         return this.videoService.insertVideo(insertVideo,file)
     } 
     @Get() 

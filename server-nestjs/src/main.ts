@@ -9,6 +9,7 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
   app.use(bodyParser.json({ limit: '30mb' }));
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
   await app.listen(5001);
 }
 bootstrap();

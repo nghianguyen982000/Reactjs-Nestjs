@@ -6,3 +6,4 @@ import{
 
 export const postLogin = (payload:LoginData ) => axios.post(`${URL}/auth/login`,payload)
 export const postRegister = (payload:RegisterData ) => axios.post(`${URL}/auth/register`,payload)
+export const fetchCheckLogin = () => axios.get(`${URL}/auth/checkLogin`)

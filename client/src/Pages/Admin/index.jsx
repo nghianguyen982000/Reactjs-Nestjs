@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.scss";
 import {
   MenuUnfoldOutlined,
@@ -17,6 +17,7 @@ import logoAd from "../../Assets/img/logoUser.png";
 import CourseAdmin from "./CourseAdmin";
 import CUVideo from "./CUVideo";
 import CUCourse from "./CUCourse";
+import { AuthContext } from "../../Store/Contexts/AuthContext";
 
 const { Header, Sider, Content } = Layout;
 
@@ -24,6 +25,16 @@ const Admin = () => {
   const navigate = useNavigate();
   const [colapsed, setColapsed] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const { checkLogin, auth } = useContext(AuthContext);
+  useEffect(() => {
+    checkLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      navigate("/login");
+    }
+  }, [auth.isAuthenticated, navigate]);
   const toggle = () => {
     setCollapsed(!collapsed);
   };
