@@ -4,9 +4,9 @@ Content-Type: application/json
 {
     "email":"admin@gmail.com",
     "password":"147258369",
-    "nameAccount":"nghia",
-    "userName":"nghia",
-    "role":"user"
+    "nameAccount":"admin",
+    "userName":"admin",
+    "role":"admin"
 }
 
 ###
@@ -14,7 +14,7 @@ POST http://localhost:5001/auth/login
 Content-Type: application/json
 
 {
-    "userName":"nghia",
+    "userName":"admin",
     "password":"147258369"
 }
 
@@ -31,7 +31,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 POST  http://localhost:5001/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
+Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2Nzg5OTMzNTgsImV4cCI6MTY3ODk5OTM1OH0.CNFLudfpauBs7ILi9a9OXXtqmxbf-1Cyi19mZ8ammWw
 
 {
     "title": "string",
@@ -44,7 +44,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 GET  http://localhost:5001/courses
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
 
 ###
 GET  http://localhost:5001/courses/7
@@ -58,11 +57,14 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
 
 {
-    "title": "string1",
-    "description": "string1",
-    "image": "string1",
-    "benifit": "string1",
-    "field": "string1"
+     "id": 1,
+      "title": "tilte1",
+      "description": "description",
+      "image": "http://res.cloudinary.com/dbxx9drdo/image/upload/v1678896410/eebuy4acsxrllehnxckp.jpg",
+      "benifit": "benifit",
+      "field": "field",
+      "createdAt": "2023-03-15T16:06:51.289Z",
+      "updatedAt": "2023-03-15T16:06:51.289Z"
 }
 
 ###

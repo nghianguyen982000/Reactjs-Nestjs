@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../../Store/Contexts/AuthContext";
 import { notification } from "antd";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, CheckCircleOutlined } from "@ant-design/icons";
 
 const schemaLogin = yup.object().shape({
   userName: yup.string().required("Please fill in this field"),
@@ -27,18 +27,33 @@ const Login = () => {
     resolver: yupResolver(schemaLogin),
   });
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { login, auth } = useContext(AuthContext);
   const onSubmit = async (data: LoginProps) => {
     const resp = await login(data);
-    if (resp) {
-      navigate("/admin/course");
-    } else {
+    if (!resp) {
       notification.open({
         message: "Sai tài khoản hoặc mật khẩu",
         icon: <CloseCircleOutlined style={{ color: "red" }} />,
       });
     }
   };
+  useEffect(() => {
+    if (auth.user?.role === "admin" && auth.isAuthenticated) {
+      navigate("/admin/course");
+      notification.open({
+        message: "Đăng nhập thành công",
+        icon: <CheckCircleOutlined style={{ color: "green" }} />,
+      });
+    }
+    if (auth.user?.role === "user" && auth.isAuthenticated) {
+      navigate("/");
+      notification.open({
+        message: "Đăng nhập thành công",
+        icon: <CheckCircleOutlined style={{ color: "green" }} />,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth]);
   return (
     <div
       className="bg-top bg-cover bg-no-repeat h-screen"

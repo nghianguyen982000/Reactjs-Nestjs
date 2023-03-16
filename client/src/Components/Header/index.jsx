@@ -22,10 +22,13 @@ const Header = () => {
   const [visible, setVisible] = useState(false);
   const [btnCourse, setBtnCourse] = useState(false);
   const [btnFavorite, setBtnFavorite] = useState(false);
-  const { auth } = useContext(AuthContext);
+  const { auth, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const onClose = () => {
     setVisible(false);
+  };
+  const handleLogout = () => {
+    logout();
   };
   return (
     <div className="header">
@@ -73,7 +76,7 @@ const Header = () => {
               <KeyOutlined />
               <span> Đổi mật khẩu</span>
             </div>
-            <div className="headerAccountDrawerItem">
+            <div className="headerAccountDrawerItem" onClick={handleLogout}>
               <LogoutOutlined />
               <span> Đăng xuất</span>
             </div>
@@ -175,7 +178,7 @@ const Header = () => {
                   </div>
                   <div className="UserAuthContent">
                     <p>Đổi mật khẩu</p>
-                    <p>Đăng xuất</p>
+                    <p onClick={handleLogout}>Đăng xuất</p>
                   </div>
                 </div>
               )}

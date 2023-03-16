@@ -10,13 +10,7 @@ import setAuthToken from "../../Api/untill";
 
 const authDefaultValue: AuthState = {
   isAuthenticated: false,
-  user: {
-    email: "",
-    id: "",
-    nameAccount: "",
-    userName: "",
-    role: "",
-  },
+  user: null,
 };
 
 type Props = {
@@ -27,6 +21,7 @@ type AuthContextDefault = {
   login: (payload: LoginData) => Promise<boolean>;
   signup: (payload: RegisterData) => Promise<boolean>;
   checkLogin: () => Promise<boolean>;
+  logout: () => void;
 };
 export const AuthContext = createContext<AuthContextDefault>(
   {} as AuthContextDefault
@@ -67,6 +62,7 @@ const AuthContextProvider = ({ children }: Props) => {
           type: AuthActionType.LOGIN,
           payload: { isAuthenticated: true, user: resp.data.user },
         });
+        window.location.href = "/login";
       }
       return true;
     } catch (error) {
@@ -83,7 +79,18 @@ const AuthContextProvider = ({ children }: Props) => {
       return false;
     }
   };
-  const AuthContextData = { auth, login, signup, checkLogin };
+  const logout = () => {
+    localStorage.removeItem("token");
+    setAuthToken("");
+    dispatch({
+      type: AuthActionType.SET_AUTH,
+      payload: {
+        isAuthenticated: false,
+        user: null,
+      },
+    });
+  };
+  const AuthContextData = { auth, login, signup, checkLogin, logout };
 
   return (
     <AuthContext.Provider value={AuthContextData}>

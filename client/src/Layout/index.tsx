@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "../Components/Header";
 import Course from "../Pages/End-User/Course";
 import Detail from "../Pages/End-User/Detail";
@@ -8,17 +8,13 @@ import Learning from "../Pages/End-User/Learning";
 import { AuthContext } from "../Store/Contexts/AuthContext";
 
 const Layout = () => {
-  const { checkLogin, auth } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { checkLogin } = useContext(AuthContext);
+
   useEffect(() => {
     checkLogin();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  useEffect(() => {
-    if (!auth.isAuthenticated) {
-      navigate("/login");
-    }
-  }, [auth.isAuthenticated, navigate]);
+
   return (
     <>
       <Header />

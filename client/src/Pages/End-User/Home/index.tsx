@@ -10,7 +10,6 @@ const Home = () => {
         </div>
       </div>
       <div className="homeCourse">
-        <div className="homeTitle">Các khóa học</div>
         <div className="homeCourseQuote">
           Nếu bạn ngủ quên bây giờ, bạn sẽ mơ. Nếu bạn học ngay bây giờ, bạn sẽ
           sống với ước mơ của mình!

@@ -6,7 +6,7 @@ const ItemMonitoring = () => {
     <div className="itemMonitoring">
       <div className="itemMonitoringLeft">
         <div className="itemMonitoringTitle">
-          Chuc ban hoc tap va lam viec hieu qua
+        Chúc bạn học tập và làm việc hiệu quả
         </div>
       </div>
       <div className="itemMonitoringRight">

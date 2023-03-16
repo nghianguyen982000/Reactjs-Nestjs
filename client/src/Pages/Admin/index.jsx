@@ -31,10 +31,15 @@ const Admin = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (!auth.isAuthenticated) {
-      navigate("/login");
+    if (auth) {
+      if (auth.user?.role === "user") {
+        navigate("/");
+      }
+      navigate("course");
     }
-  }, [auth.isAuthenticated, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth]);
+
   const toggle = () => {
     setCollapsed(!collapsed);
   };
