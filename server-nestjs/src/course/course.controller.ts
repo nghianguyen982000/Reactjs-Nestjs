@@ -13,16 +13,10 @@ import {
   Delete,
   Patch,
   Post,
-  Req,
   UseGuards,
-  HttpCode,
 } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { User } from '@prisma/client';
-//import { AuthGuard } from '@nestjs/passport';
-import { Request } from 'express';
-import { GetUser } from '../auth/decorator';
 import { MyJwtGuard } from '../auth/guard';
 import { CourseService } from './course.service';
 import { InsertCourseDto, UpdateCourseDto } from './dto';
@@ -49,8 +43,8 @@ export class CourseController {
     return this.courseService.insertCourse(insertCourse, file);
   }
   @Get()
-  getCourses() {
-    return this.courseService.getCourses();
+  getCourses(@Query('search') search: string) {
+    return this.courseService.getCourses(search);
   }
   @Get(':id')
   getCourse(@Param('id', ParseIntPipe) courseId: number) {
@@ -58,11 +52,14 @@ export class CourseController {
   }
   @UseGuards(MyJwtGuard) //you can also make your own "decorator"
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('file'))
   updateCourse(
     @Param('id', ParseIntPipe) courseId: number,
     @Body() updateCourse: UpdateCourseDto,
+    @UploadedFile()
+    file: Express.Multer.File,
   ) {
-    return this.courseService.updateCourse(courseId, updateCourse);
+    return this.courseService.updateCourse(courseId, updateCourse, file);
   }
   @UseGuards(MyJwtGuard) //you can also make your own "decorator"
   @Delete()

@@ -1,36 +1,50 @@
-import { Popconfirm, Space, Select, Input, Table, Button } from "antd";
+import { Space, Select, Input, Table, Button } from "antd";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CourseContext } from "../../../Store/Contexts/CourseContext";
+import { Course } from "../../../Types/Model/course";
 
 const { Option } = Select;
 const { Search } = Input;
 
 const CourseAdmin = () => {
   const navigate = useNavigate();
-  const { listCourse, data } = useContext(CourseContext);
+
+  const { listCourse, data, removedCourse } = useContext(CourseContext);
   useEffect(() => {
-    const fetchList = async () => {
-      await listCourse();
-    };
-    fetchList();
+    listCourse();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleDelete = async (id: string) => {
+    const resp = await removedCourse(id);
+    if (resp) {
+      console.log(resp);
+    }
+  };
   const columns = [
     { title: "Tiêu đề", dataIndex: "title", key: "1", ellipsis: true },
     {
       title: "Thao tác",
       dataIndex: "",
       key: "4",
-      render: () => (
+      render: (record: Course) => (
         <Space size="middle">
-          <Button type="dashed" onClick={() => navigate("/admin/cuCourse")}>
+          <Button
+            type="dashed"
+            onClick={() => navigate(`/admin/course/update?id=${record.id}`)}
+          >
             Xem và cập nhật
           </Button>
-          <Button type="dashed">Bài giảng</Button>
-          <Popconfirm title="Khóa học này sẽ bị xóa vĩnh viễn">
-            <Button type="dashed">Xóa</Button>
-          </Popconfirm>
+          <Button
+            type="dashed"
+            onClick={() => navigate(`/admin/video/${record.id}`)}
+          >
+            Bài giảng
+          </Button>
+          <Button type="dashed" onClick={() => handleDelete(record.id)}>
+            Xóa
+          </Button>
         </Space>
       ),
     },
@@ -39,14 +53,13 @@ const CourseAdmin = () => {
   return (
     <div className="courseAd">
       <Space>
-        {/* <Search
+        <Search
           style={{
             width: 350,
           }}
           placeholder="Tìm kiếm khóa học"
-          enterButton
-        /> */}
-        {/* <Select
+        />
+        <Select
           style={{
             width: 120,
           }}
@@ -55,15 +68,15 @@ const CourseAdmin = () => {
           placeholder="Content"
         >
           <Option value="All">Tất cả</Option>
-          <Option>item</Option>
-        </Select> */}
-        <Button type="dashed" onClick={() => navigate("/admin/course/edit")}>
+          <Option>Lap trinh</Option>
+        </Select>
+        <Button type="dashed" onClick={() => navigate("/admin/course/create")}>
           Tạo khóa học mới
         </Button>
       </Space>
       <Table
         columns={columns}
-        dataSource={data.course}
+        dataSource={data.courses}
         rowKey={(record) => record.id}
         style={{ paddingTop: "10px" }}
         scroll={{

@@ -14,8 +14,9 @@ import {
 } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Drawer } from "antd";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../Store/Contexts/AuthContext";
+import { CourseContext } from "../../Store/Contexts/CourseContext";
 
 const Header = () => {
   const [btnUser, setBtnUser] = useState(false);
@@ -23,7 +24,21 @@ const Header = () => {
   const [btnCourse, setBtnCourse] = useState(false);
   const [btnFavorite, setBtnFavorite] = useState(false);
   const { auth, logout } = useContext(AuthContext);
+  const { searchCourses, listCourse } = useContext(CourseContext);
+  const search = useRef();
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (search.current.value === "") {
+      listCourse();
+    } else {
+      searchCourses(search.current.value);
+      search.current.value = "";
+    }
+  };
   const navigate = useNavigate();
+  const onFocus = () => {
+    navigate("/course");
+  };
   const onClose = () => {
     setVisible(false);
   };
@@ -100,8 +115,13 @@ const Header = () => {
           <div className="headerSearchLogo">
             <SearchOutlined style={{ fontSize: "20px" }} />
           </div>
-          <form action="">
-            <input type="text" placeholder="Tìm kiếm khóa học"></input>
+          <form action="" onSubmit={(e) => onSubmit(e)}>
+            <input
+              type="text"
+              ref={search}
+              onFocus={() => onFocus()}
+              placeholder="Tìm kiếm khóa học"
+            ></input>
           </form>
         </div>
       </div>

@@ -19,7 +19,7 @@ const ItemCourse = ({ course }: Props) => {
       >
         <div
           className="itemCoursePictureAc"
-          onClick={() => navigate(`/course/1`)}
+          onClick={() => navigate(`/course/${course.id}`)}
         >
           Xem khóa học
         </div>

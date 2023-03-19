@@ -21,31 +21,37 @@ export class VideoService {
     private clouldinaryService: ClouldinaryService,
   ) {}
   async insertVideo(insertVideo: InsertVideoDto, file: Express.Multer.File) {
-    // console.log(file);
-    const image = await this.clouldinaryService.uploadVideo(file);
-    console.log(image);
-    // const video=await this.prismaService.video.create({
-    //     data:{
-    //         ...insertVideo,
-    //         url:image.url
-    //     }
-    // })
-    // if(!video){
-    //     throw new HttpException({
-    //         statusCode: HttpStatus.BAD_REQUEST,
-    //         message: "Fail",
-    //         error: 'Bad request',
-    //         success:false
-    //       }, HttpStatus.BAD_REQUEST);
-    // }
-    // return {
-    //     success:true,
-    //     message: 'Successfully!!!',
-    //     video
-    // }
+    const image = await this.clouldinaryService.uploadImage(file);
+    const video = await this.prismaService.video.create({
+      data: {
+        ...insertVideo,
+        courseId: Number(insertVideo.courseId),
+        url: image.url,
+      },
+    });
+    if (!video) {
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: 'Fail',
+          error: 'Bad request',
+          success: false,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return {
+      success: true,
+      message: 'Successfully!!!',
+      video,
+    };
   }
-  async getVideos() {
-    const videos = await this.prismaService.video.findMany();
+  async getVideos(courseId: string) {
+    const videos = await this.prismaService.video.findMany({
+      where: {
+        courseId: Number(courseId),
+      },
+    });
     if (!videos) {
       throw new HttpException(
         {
@@ -82,10 +88,14 @@ export class VideoService {
     }
     return {
       success: true,
-      video,
+      data: video,
     };
   }
-  async updateVideo(videoId: number, updateVideo: UpdateVideoDto) {
+  async updateVideo(
+    videoId: number,
+    updateVideo: UpdateVideoDto,
+    file: Express.Multer.File,
+  ) {
     const video = await this.prismaService.video.findUnique({
       where: {
         id: videoId,
@@ -106,12 +116,19 @@ export class VideoService {
       where: {
         id: videoId,
       },
-      data: { ...updateVideo },
+      data: {
+        ...updateVideo,
+        url: file
+          ? await (
+              await this.clouldinaryService.uploadImage(file)
+            ).url
+          : updateVideo.url,
+      },
     });
     return {
       success: true,
       message: 'Excellent progress',
-      video: newVideo,
+      data: newVideo,
     };
   }
   async deleteVideo(videoId: number) {
@@ -138,7 +155,7 @@ export class VideoService {
     });
     return {
       success: true,
-      video: videoDeleted,
+      data: videoDeleted,
     };
   }
 }

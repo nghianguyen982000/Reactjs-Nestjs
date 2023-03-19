@@ -49,6 +49,7 @@ const AuthContextProvider = ({ children }: Props) => {
         type: AuthActionType.SET_AUTH,
         payload: { isAuthenticated: false, user: null },
       });
+      window.location.href = "/login";
       return false;
     }
   };
@@ -62,7 +63,6 @@ const AuthContextProvider = ({ children }: Props) => {
           type: AuthActionType.LOGIN,
           payload: { isAuthenticated: true, user: resp.data.user },
         });
-        window.location.href = "/login";
       }
       return true;
     } catch (error) {

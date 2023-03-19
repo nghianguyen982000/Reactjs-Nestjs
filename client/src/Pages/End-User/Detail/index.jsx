@@ -1,21 +1,36 @@
 import "./style.scss";
-import { Collapse } from "antd";
+import { Collapse, Spin } from "antd";
 import { CheckOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { CourseContext } from "../../../Store/Contexts/CourseContext";
 
 const { Panel } = Collapse;
 
 const Detail = () => {
-  return (
+  const { id } = useParams();
+  const { detailCourse, data } = useContext(CourseContext);
+  useEffect(() => {
+    if (id) {
+      detailCourse(id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+  return data.course ? (
     <div className="detail">
       <div className="detailLeft">
-        <div className="detailLeftTitle">Kiến Thức Nhập Môn IT</div>
-        <div className="detailLeftDescription">Để có cái nhìn tổng quan về ngành IT - Lập trình web các bạn nên xem các videos tại khóa này trước nhé.</div>
+        <div className="detailLeftTitle">{data.course.title}</div>
+        <div className="detailLeftDescription">{data.course.description}</div>
         <div className="detailLeftBenefit">
           <h3>Bạn sẽ học được gì?</h3>
           <div className="benefitDetail">
-            <p k>
-              <CheckOutlined style={{ color: "#f05123" }} /> item
-            </p>
+            {data.course.benefit?.map((item) => {
+              return (
+                <p>
+                  <CheckOutlined style={{ color: "#f05123" }} /> {item}
+                </p>
+              );
+            })}
           </div>
         </div>
         <div className="detailLeftContent">
@@ -38,7 +53,7 @@ const Detail = () => {
         <div
           className="detailRightImg"
           style={{
-            backgroundImage: `url(https://files.fullstack.edu.vn/f8-prod/courses/7.png)`,
+            backgroundImage: `url(${data.course.image})`,
           }}
         ></div>
         <div className="detailRightAction">
@@ -48,6 +63,8 @@ const Detail = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <Spin />
   );
 };
 

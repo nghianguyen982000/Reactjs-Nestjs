@@ -1,27 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, Input, Modal, Upload, UploadFile } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { CourseContext } from "../../../Store/Contexts/CourseContext";
+import { VideoContext } from "../../../Store/Contexts/VideoContext";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import { RcFile, UploadChangeParam } from "antd/es/upload";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-const { TextArea } = Input;
-
-const schemaCreateCourse = yup.object().shape({
+const schemaCreateVideo = yup.object().shape({
   title: yup.string().required("Please fill in this field"),
-  description: yup.string().required("Please fill in this field"),
-  benefit: yup.string().required("Please fill in this field"),
-  field: yup.string().required("Please fill in this field"),
+  chapter: yup.string().required("Please fill in this field"),
+  lesson: yup.string().required("Please fill in this field"),
 });
 
-interface CreateCourseData {
+interface CreateVideoData {
   title: string;
-  description: string;
-  benefit: string;
-  field: string;
+  chapter: string;
+  lesson: string;
   file: File;
 }
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -31,19 +27,18 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = (error) => reject(error);
   });
-const CUCourse = () => {
-  const { status } = useParams();
+const CUVideo = () => {
+  const { status, courseId } = useParams();
   const [searchParams] = useSearchParams();
-  const { createCourse, detailCourse, updateCourse } =
-    useContext(CourseContext);
+  const { createVideo, detailVideo, updateVideo } = useContext(VideoContext);
   const {
     control,
     handleSubmit,
     setValue,
     reset,
     formState: { errors },
-  } = useForm<CreateCourseData>({
-    resolver: yupResolver(schemaCreateCourse),
+  } = useForm<CreateVideoData>({
+    resolver: yupResolver(schemaCreateVideo),
   });
   const navigate = useNavigate();
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -53,15 +48,14 @@ const CUCourse = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   useEffect(() => {
     if ((searchParams.get("id"), status === "update")) {
-      detailCourse(searchParams.get("id") as string).then((data) => {
+      detailVideo(searchParams.get("id") as string).then((data) => {
         if (data) {
           reset({
             title: data.title,
-            description: data.description,
-            benefit: data.benefit.join("\n"),
-            field: data.field,
+            chapter: data.chapter,
+            lesson: data.lesson,
           });
-          setFileList([{ url: data.image, uid: "1", name: "image" }]);
+          setFileList([{ url: data.url, uid: "1", name: "video" }]);
         }
       });
     }
@@ -85,37 +79,37 @@ const CUCourse = () => {
     setValue("file", info.fileList[0].originFileObj as File);
     setFileList(info.fileList);
   };
-  const onSubmit = async (data: CreateCourseData) => {
+  const onSubmit = async (data: CreateVideoData) => {
     setLoading(true);
     const formData = new FormData();
     formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("benefit", data.benefit);
-    formData.append("field", data.field);
-    if (status === "create") {
+    formData.append("chapter", data.chapter);
+    formData.append("lesson", data.lesson);
+    if (status === "create" && courseId) {
       formData.append("file", data.file);
-      const resp = await createCourse(formData);
+      formData.append("courseId", courseId);
+      const resp = await createVideo(formData);
       if (resp) {
         setLoading(false);
-        navigate("/admin/course");
+        navigate(`/admin/video/${courseId}`);
       }
     }
     if (status === "update" && searchParams.get("id")) {
       if (data.file) {
         formData.append("file", data.file);
       }
-      const resp = await updateCourse(
+      const resp = await updateVideo(
         searchParams.get("id") as string,
         formData
       );
       if (resp) {
         setLoading(false);
-        navigate("/admin/course");
+        navigate(`/admin/video/${courseId}`);
       }
     }
   };
   return (
-    <div className="cuCourse">
+    <div className="cuVideo">
       <Form
         labelCol={{ span: 3 }}
         wrapperCol={{ span: 20 }}
@@ -135,37 +129,22 @@ const CUCourse = () => {
           )}
         />
         <Controller
-          name="description"
+          name="chapter"
           control={control}
           render={({ field }) => (
-            <Form.Item label="Mô tả">
-              <Input {...field} size="large" placeholder="Mô tả" />
-              <p className="text-red-600">{errors.description?.message}</p>
+            <Form.Item label="Chuong">
+              <Input {...field} size="large" placeholder="Chuong" />
+              <p className="text-red-600">{errors.chapter?.message}</p>
             </Form.Item>
           )}
         />
         <Controller
-          name="benefit"
+          name="lesson"
           control={control}
           render={({ field }) => (
-            <Form.Item label="Lợi ích">
-              <TextArea
-                rows={4}
-                {...field}
-                size="large"
-                placeholder="Lợi ích"
-              />
-              <p className="text-red-600">{errors.benefit?.message}</p>
-            </Form.Item>
-          )}
-        />
-        <Controller
-          name="field"
-          control={control}
-          render={({ field }) => (
-            <Form.Item label="Lĩnh vực">
-              <Input {...field} size="large" placeholder="Lĩnh vực" />
-              <p className="text-red-600">{errors.field?.message}</p>
+            <Form.Item label="Bai hoc">
+              <Input {...field} size="large" placeholder="Bai hoc" />
+              <p className="text-red-600">{errors.lesson?.message}</p>
             </Form.Item>
           )}
         />
@@ -208,4 +187,4 @@ const CUCourse = () => {
   );
 };
 
-export default CUCourse;
+export default CUVideo;

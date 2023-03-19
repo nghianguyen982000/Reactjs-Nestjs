@@ -18,6 +18,7 @@ import CourseAdmin from "./CourseAdmin";
 import CUVideo from "./CUVideo";
 import CUCourse from "./CUCourse";
 import { AuthContext } from "../../Store/Contexts/AuthContext";
+import VideoAdmin from "./VideoAdmin";
 
 const { Header, Sider, Content } = Layout;
 
@@ -35,7 +36,6 @@ const Admin = () => {
       if (auth.user?.role === "user") {
         navigate("/");
       }
-      navigate("course");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
@@ -119,8 +119,12 @@ const Admin = () => {
           >
             <Routes>
               <Route path="/course" element={<CourseAdmin />} />
-              <Route path="/course/video/edit" element={<CUVideo />} />
-              <Route path="/course/edit" element={<CUCourse />} />
+              <Route path="/video/:courseId" element={<VideoAdmin />} />
+              <Route
+                path="/video/:courseId/edit/:status"
+                element={<CUVideo />}
+              />
+              <Route path="/course/:status" element={<CUCourse />} />
             </Routes>
           </Content>
         </Layout>

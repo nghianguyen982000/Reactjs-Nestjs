@@ -22,17 +22,6 @@ model User{
   updatedAt DateTime @updatedAt
 }
 
-model Course{
-  id Int @id @default(autoincrement())
-  title String 
-  description String
-  image String
-  benifit String 
-  field String
-  video Video[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
 
 model Video{
   id Int @id @default(autoincrement())
@@ -40,6 +29,18 @@ model Video{
   lesson String
   title String
   url String
+  course Course @relation(fields: [courseId], references: [id])
   courseId Int
-  course  Course @relation(fields: [courseId], references: [id])
+}
+
+model Course{
+  id Int @id @default(autoincrement())
+  title String 
+  description String
+  image String
+  benefit String[]
+  field String
+  videos Video[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

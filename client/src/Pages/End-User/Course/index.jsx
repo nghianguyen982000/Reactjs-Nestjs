@@ -7,13 +7,9 @@ import { CourseContext } from "../../../Store/Contexts/CourseContext";
 const Course = () => {
   const { listCourse, data } = useContext(CourseContext);
   useEffect(() => {
-    const fetchList = async () => {
-      await listCourse();
-    };
-    fetchList();
+    listCourse();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(data);
   return (
     <div className="course">
       <div className="catagoryCourse">
@@ -27,8 +23,8 @@ const Course = () => {
         </Radio.Group>
       </div>
       <div className="allCourse">
-        {data.course.map((course) => {
-          return <ItemCourse course={course} />;
+        {data.courses.map((course) => {
+          return <ItemCourse key={course.id} course={course} />;
         })}
       </div>
       <div style={{ height: "300px" }}></div>

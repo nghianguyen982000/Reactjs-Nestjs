@@ -31,18 +31,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 POST  http://localhost:5001/courses
 Content-Type: application/json
-Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2Nzg5OTMzNTgsImV4cCI6MTY3ODk5OTM1OH0.CNFLudfpauBs7ILi9a9OXXtqmxbf-1Cyi19mZ8ammWw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2NzkxODM5NDksImV4cCI6MTY3OTE4OTk0OX0.rWEzFz4PgWeOM8bZcN_BDmh3JPwV1P2fdR8Eqo2rmkM
 
 {
     "title": "string",
     "description":"string",
     "image": "string",
-    "benifit": "string",
+    "benefit": "string",
     "field": "English"
 }
 
 ###
 GET  http://localhost:5001/courses
+Content-Type: application/json
+
+###
+GET  http://localhost:5001/courses?search=html
 Content-Type: application/json
 
 ###
@@ -52,19 +56,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 
 
 ###
-PATCH   http://localhost:5001/courses/1
+PATCH   http://localhost:5001/courses/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2NzkxOTg1MjAsImV4cCI6MTY3OTIwNDUyMH0.AtWwWu1fFYfxTu1CG-2W0ZntJm1ik2Hbm33HC4cQ_LA
 
 {
-     "id": 1,
       "title": "tilte1",
       "description": "description",
-      "image": "http://res.cloudinary.com/dbxx9drdo/image/upload/v1678896410/eebuy4acsxrllehnxckp.jpg",
-      "benifit": "benifit",
-      "field": "field",
-      "createdAt": "2023-03-15T16:06:51.289Z",
-      "updatedAt": "2023-03-15T16:06:51.289Z"
+      "benefit": "benefit",
+      "field": "field"
 }
 
 ###
@@ -76,7 +76,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 POST  http://localhost:5001/videos
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2NzkyNDg2OTAsImV4cCI6MTY3OTI1NDY5MH0.co0gdlT9zzN_D8GuVMawkN9YQqUsmWEp4pF38VFdzG4
 
 {
     "chapter": "string",
@@ -87,14 +87,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 }
 
 ###
-GET  http://localhost:5001/videos
+GET  http://localhost:5001/videos?courseId=2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2NzkyNTQ4NTcsImV4cCI6MTY3OTI2MDg1N30.HCrHPyDf633lWyI8eiDDFyRN8BtWN4vMf_rBMAbncXQ
 
 ###
-GET  http://localhost:5001/videos/7
+GET  http://localhost:5001/videos/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2NzkyNTQ4NTcsImV4cCI6MTY3OTI2MDg1N30.HCrHPyDf633lWyI8eiDDFyRN8BtWN4vMf_rBMAbncXQ
 
 
 ###
@@ -106,7 +106,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
     "title": "string1",
     "description": "string1",
     "image": "string1",
-    "benifit": "string1",
+    "benefit": "string1",
     "field": "string1"
 }
 
