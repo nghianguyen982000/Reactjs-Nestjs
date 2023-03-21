@@ -21,12 +21,12 @@ export class VideoService {
     private clouldinaryService: ClouldinaryService,
   ) {}
   async insertVideo(insertVideo: InsertVideoDto, file: Express.Multer.File) {
-    const image = await this.clouldinaryService.uploadImage(file);
+    const resp = await this.clouldinaryService.uploadVideo(file);
     const video = await this.prismaService.video.create({
       data: {
         ...insertVideo,
         courseId: Number(insertVideo.courseId),
-        url: image.url,
+        url: resp.url,
       },
     });
     if (!video) {

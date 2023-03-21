@@ -23,21 +23,22 @@ export class ClouldinaryService {
       toStream(file.buffer).pipe(upload);
     });
   }
-  //   async uploadVideo(file:Express.Multer.File): Promise<UploadApiResponse | UploadApiErrorResponse>{
-  //     console.log(file)
-  //     return new Promise((resolve, reject) => {
-  //         const upload = v2.uploader.upload(file.path, {
-  //           resource_type: "video",
-  //           public_id: file.originalname,
-  //           chunk_size: 6000000,
-  //           overwrite: true,
-  //         },(err, result) => {
-  //           return result
-  //       });
-  //         toStream(file.buffer).pipe(upload);
-  //       });
-  // }
-  // async uploadVideo(file) {
-  //   console.log(file);
-  // }
+  async uploadVideo(
+    file: Express.Multer.File,
+  ): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    console.log(file);
+    return new Promise((resolve, reject) => {
+      const upload = v2.uploader.upload_chunked_stream(
+        {
+          resource_type: 'video',
+          chunk_size: 6000000,
+        },
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        },
+      );
+      toStream(file.buffer).pipe(upload);
+    });
+  }
 }
