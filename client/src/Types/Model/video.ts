@@ -4,5 +4,6 @@ export type Video = {
   lesson: string;
   title: string;
   url: string;
+  publicId: string;
   courseId: string;
 };

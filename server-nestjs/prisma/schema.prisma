@@ -29,6 +29,7 @@ model Video{
   lesson String
   title String
   url String
+  publicId String
   course Course @relation(fields: [courseId], references: [id])
   courseId Int
 }

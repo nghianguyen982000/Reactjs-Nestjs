@@ -21,4 +21,8 @@ export class UpdateVideoDto{
     @IsNumber()
     @IsOptional()
     courseId?: number
+
+    @IsNumber()
+    @IsOptional()
+    publicId?: string
 }

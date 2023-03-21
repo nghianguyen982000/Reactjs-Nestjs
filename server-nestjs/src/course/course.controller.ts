@@ -40,6 +40,7 @@ export class CourseController {
     )
     file: Express.Multer.File,
   ) {
+    console.log(insertCourse);
     return this.courseService.insertCourse(insertCourse, file);
   }
   @Get()

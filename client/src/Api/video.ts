@@ -3,17 +3,27 @@ import { Video } from "../Types/Model/video";
 import { URL } from "./url";
 export interface Response<T = Record<never, never>> {
   data: T;
+  success: boolean;
 }
 
-export const fetchVideo = (courseId: string) =>
+export const FetchVideo = (courseId: string) =>
   axios.get<Response<Video[]>>(`${URL}/videos?courseId=${courseId}`);
-export const postVideo = (payload: FormData) =>
+export const PostVideo = (payload: FormData) =>
   axios.post(`${URL}/videos`, payload);
-export const patchVideo = (id: string, payload: FormData) =>
+export const UploadVideo = (payload: FormData) =>
+  axios.post<Response<{ url: string; public_id: string }>>(
+    `${URL}/videos/upload`,
+    payload
+  );
+export const PatchVideo = (id: string, payload: FormData) =>
   axios.patch(`${URL}/videos/${id}`, payload);
-export const deleteVideo = (id: string) =>
+export const DestroyVideo = (public_id: string) =>
+  axios.delete<{ success: boolean }>(
+    `${URL}/videos/destroy?public_id=${public_id}`
+  );
+export const DeleteVideo = (id: string) =>
   axios.delete<Response<Video>>(`${URL}/videos?id=${id}`);
-export const getVideo = (id: string) =>
+export const GetVideo = (id: string) =>
   axios.get<Response<Video>>(`${URL}/videos/${id}`);
-export const searchVideo = (search: string) =>
+export const SearchVideo = (search: string) =>
   axios.get<Response<Video[]>>(`${URL}/videos?search=${search}`);

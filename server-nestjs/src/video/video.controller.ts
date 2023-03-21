@@ -32,12 +32,9 @@ import { InsertVideoDto, UpdateVideoDto } from './dto';
 export class VideoController {
   constructor(private videoService: VideoService) {}
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  insertVideo(
-    @Body() insertVideo: InsertVideoDto,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    return this.videoService.insertVideo(insertVideo, file);
+  @UseInterceptors(FileInterceptor(''))
+  insertVideo(@Body() insertVideo: InsertVideoDto) {
+    return this.videoService.insertVideo(insertVideo);
   }
   @Get()
   getVideos(@Query('courseId') courseId: string) {
@@ -49,18 +46,27 @@ export class VideoController {
   }
 
   @Patch(':id')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor(''))
   updateVideo(
     @Param('id', ParseIntPipe) videoId: number,
     @Body() updateVideo: UpdateVideoDto,
-    @UploadedFile()
-    file: Express.Multer.File,
   ) {
-    console.log(updateVideo);
-    return this.videoService.updateVideo(videoId, updateVideo, file);
+    return this.videoService.updateVideo(videoId, updateVideo);
   }
   @Delete()
   deleteVideo(@Query('id', ParseIntPipe) videoId: number) {
     return this.videoService.deleteVideo(videoId);
+  }
+  @Delete('destroy')
+  destroyVideo(@Query('public_id') publicId: string) {
+    return this.videoService.destroyVideo(publicId);
+  }
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadVideo(
+    @UploadedFile()
+    file: Express.Multer.File,
+  ) {
+    return this.videoService.uploadVideo(file);
   }
 }

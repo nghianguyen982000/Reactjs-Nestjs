@@ -76,13 +76,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 POST  http://localhost:5001/videos
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2NzkyNDg2OTAsImV4cCI6MTY3OTI1NDY5MH0.co0gdlT9zzN_D8GuVMawkN9YQqUsmWEp4pF38VFdzG4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2Nzk0MjYxNDMsImV4cCI6MTY3OTQzMjE0M30.8cQBDqjQgB0OJYlIkVQays_taCYWqze65AAwFL5skmg
 
 {
     "chapter": "string",
     "lesson":"string",
     "title": "string",
     "url": "string",
+    "publicId": "string",
     "courseId": "English"
 }
 
@@ -114,3 +115,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 DELETE   http://localhost:5001/videos?id=4
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
+
+###
+DELETE   http://localhost:5001/videos/destroy?public_id=kuikagmned6dhtwnxvri
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW4iLCJpYXQiOjE2Nzk0MjE1MzcsImV4cCI6MTY3OTQyNzUzN30.hl0ALhRsHHtvdpHbWlJSK6MlIIEFZnt5VDXhvQwVePk

@@ -1,11 +1,13 @@
 import { createContext, ReactNode, useReducer } from "react";
 import {
-  deleteVideo,
-  fetchVideo,
-  getVideo,
-  patchVideo,
-  postVideo,
-  searchVideo,
+  DeleteVideo,
+  DestroyVideo,
+  FetchVideo,
+  GetVideo,
+  PatchVideo,
+  PostVideo,
+  SearchVideo,
+  UploadVideo,
 } from "../../Api/video";
 import { Video } from "../../Types/Model/video";
 import {
@@ -26,10 +28,14 @@ type VideoContextDefault = {
   data: VideoState;
   listVideo: (courseId: string) => Promise<boolean>;
   createVideo: (formData: FormData) => Promise<boolean>;
-  removedVideo: (id: string) => Promise<boolean>;
+  uploadVideo: (
+    formData: FormData
+  ) => Promise<{ url: string; public_id: string } | undefined>;
+  removeVideo: (id: string) => Promise<boolean>;
   detailVideo: (id: string) => Promise<Video | undefined>;
   updateVideo: (id: string, formData: FormData) => Promise<boolean>;
   searchVideos: (search: string) => Promise<boolean>;
+  destroyVideo: (publicId: string) => Promise<boolean>;
 };
 
 export const VideoContext = createContext<VideoContextDefault>(
@@ -43,7 +49,7 @@ const VideoContextProvider = ({ children }: Props) => {
     try {
       const {
         data: { data },
-      } = await fetchVideo(courseId);
+      } = await FetchVideo(courseId);
       dispatch({
         type: VideoActionType.LIST_VIDEO,
         payload: { videos: data },
@@ -56,7 +62,7 @@ const VideoContextProvider = ({ children }: Props) => {
   };
   const createVideo = async (formData: FormData) => {
     try {
-      await postVideo(formData);
+      await PostVideo(formData);
       return true;
     } catch (error) {
       console.error(error);
@@ -65,18 +71,18 @@ const VideoContextProvider = ({ children }: Props) => {
   };
   const updateVideo = async (id: string, formData: FormData) => {
     try {
-      await patchVideo(id, formData);
+      await PatchVideo(id, formData);
       return true;
     } catch (error) {
       console.error(error);
       return false;
     }
   };
-  const removedVideo = async (id: string) => {
+  const removeVideo = async (id: string) => {
     try {
       const {
         data: { data },
-      } = await deleteVideo(id);
+      } = await DeleteVideo(id);
       dispatch({
         type: VideoActionType.DELETE_VIDEO,
         payload: { videos: [data] },
@@ -87,11 +93,36 @@ const VideoContextProvider = ({ children }: Props) => {
       return false;
     }
   };
+  const destroyVideo = async (publicId: string) => {
+    try {
+      const {
+        data: { success },
+      } = await DestroyVideo(publicId);
+      if (!success) {
+        throw new Error("Delete fail!");
+      }
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+  const uploadVideo = async (formData: FormData) => {
+    try {
+      const {
+        data: { data },
+      } = await UploadVideo(formData);
+      return data;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
+  };
   const detailVideo = async (id: string) => {
     try {
       const {
         data: { data },
-      } = await getVideo(id);
+      } = await GetVideo(id);
       dispatch({
         type: VideoActionType.DETAIL_VIDEO,
         payload: { videos: [data] },
@@ -106,7 +137,7 @@ const VideoContextProvider = ({ children }: Props) => {
     try {
       const {
         data: { data },
-      } = await searchVideo(search);
+      } = await SearchVideo(search);
       dispatch({
         type: VideoActionType.SEARCH_VIDEO,
         payload: { videos: data },
@@ -122,10 +153,12 @@ const VideoContextProvider = ({ children }: Props) => {
     data,
     listVideo,
     createVideo,
-    removedVideo,
+    removeVideo,
     detailVideo,
     updateVideo,
     searchVideos,
+    destroyVideo,
+    uploadVideo,
   };
 
   return (

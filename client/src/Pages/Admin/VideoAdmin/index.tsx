@@ -1,13 +1,14 @@
-import { Space, Table, Button } from "antd";
+import { Space, Table, Button, notification } from "antd";
 import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { VideoContext } from "../../../Store/Contexts/VideoContext";
 import { Video } from "../../../Types/Model/video";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 const VideoAdmin = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
-  const { listVideo, data, removedVideo } = useContext(VideoContext);
+  const { listVideo, data, removeVideo } = useContext(VideoContext);
   useEffect(() => {
     if (courseId) {
       listVideo(courseId);
@@ -16,9 +17,12 @@ const VideoAdmin = () => {
   }, [courseId]);
 
   const handleDelete = async (id: string) => {
-    const resp = await removedVideo(id);
+    const resp = await removeVideo(id);
     if (resp) {
-      console.log(resp);
+      notification.open({
+        message: "Xoa thành công",
+        icon: <CheckCircleOutlined style={{ color: "green" }} />,
+      });
     }
   };
   const columns = [

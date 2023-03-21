@@ -26,7 +26,6 @@ export class ClouldinaryService {
   async uploadVideo(
     file: Express.Multer.File,
   ): Promise<UploadApiResponse | UploadApiErrorResponse> {
-    console.log(file);
     return new Promise((resolve, reject) => {
       const upload = v2.uploader.upload_chunked_stream(
         {
@@ -39,6 +38,18 @@ export class ClouldinaryService {
         },
       );
       toStream(file.buffer).pipe(upload);
+    });
+  }
+  async destroyVideo(public_id: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      v2.uploader.destroy(
+        public_id,
+        { resource_type: 'video' },
+        (error, result) => {
+          if (error) return reject(false);
+          if (result) return resolve(true);
+        },
+      );
     });
   }
 }

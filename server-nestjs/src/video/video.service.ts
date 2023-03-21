@@ -20,13 +20,11 @@ export class VideoService {
     private prismaService: PrismaService,
     private clouldinaryService: ClouldinaryService,
   ) {}
-  async insertVideo(insertVideo: InsertVideoDto, file: Express.Multer.File) {
-    const resp = await this.clouldinaryService.uploadVideo(file);
+  async insertVideo(insertVideo: InsertVideoDto) {
     const video = await this.prismaService.video.create({
       data: {
         ...insertVideo,
         courseId: Number(insertVideo.courseId),
-        url: resp.url,
       },
     });
     if (!video) {
@@ -43,7 +41,7 @@ export class VideoService {
     return {
       success: true,
       message: 'Successfully!!!',
-      video,
+      data: video,
     };
   }
   async getVideos(courseId: string) {
@@ -91,11 +89,7 @@ export class VideoService {
       data: video,
     };
   }
-  async updateVideo(
-    videoId: number,
-    updateVideo: UpdateVideoDto,
-    file: Express.Multer.File,
-  ) {
+  async updateVideo(videoId: number, updateVideo: UpdateVideoDto) {
     const video = await this.prismaService.video.findUnique({
       where: {
         id: videoId,
@@ -118,11 +112,6 @@ export class VideoService {
       },
       data: {
         ...updateVideo,
-        url: file
-          ? await (
-              await this.clouldinaryService.uploadImage(file)
-            ).url
-          : updateVideo.url,
       },
     });
     return {
@@ -156,6 +145,44 @@ export class VideoService {
     return {
       success: true,
       data: videoDeleted,
+    };
+  }
+  async destroyVideo(public_id: string) {
+    const resp = await this.clouldinaryService.destroyVideo(public_id);
+    if (!resp) {
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: 'Delete video fail!',
+          error: 'Delete video fail',
+          success: false,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return {
+      success: true,
+    };
+  }
+  async uploadVideo(file: Express.Multer.File) {
+    const resp = await this.clouldinaryService.uploadVideo(file);
+    if (!resp) {
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.BAD_REQUEST,
+          message: 'Upload video fail!',
+          error: 'Upload video fail',
+          success: false,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return {
+      success: true,
+      data: {
+        url: resp.url,
+        public_id: resp.public_id,
+      },
     };
   }
 }
