@@ -8,6 +8,7 @@ import {
   PostVideo,
   SearchVideo,
   UploadVideo,
+  VideoResp,
 } from "../../Api/video";
 import { Video } from "../../Types/Model/video";
 import {
@@ -28,9 +29,7 @@ type VideoContextDefault = {
   data: VideoState;
   listVideo: (courseId: string) => Promise<boolean>;
   createVideo: (formData: FormData) => Promise<boolean>;
-  uploadVideo: (
-    formData: FormData
-  ) => Promise<{ url: string; public_id: string } | undefined>;
+  uploadVideo: (formData: FormData) => Promise<VideoResp | undefined>;
   removeVideo: (id: string) => Promise<boolean>;
   detailVideo: (id: string) => Promise<Video | undefined>;
   updateVideo: (id: string, formData: FormData) => Promise<boolean>;

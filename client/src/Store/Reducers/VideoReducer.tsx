@@ -35,7 +35,7 @@ export const videoReducer = (state: VideoState, action: VideoAction) => {
     case "DETAIL_VIDEO":
       return {
         ...state,
-        video: state.videos.find((item) => payload.videos[0].id === item.id),
+        video: payload.videos[0],
       };
     case "SEARCH_VIDEO":
       return {

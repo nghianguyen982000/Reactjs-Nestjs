@@ -1,3 +1,5 @@
+import { Video } from "./video";
+
 export type Course = {
   id: string;
   title: string;
@@ -5,6 +7,7 @@ export type Course = {
   image: string;
   benefit: string[];
   field: string;
+  videos?: Video[];
 };
 
 export type CreateCourse = {

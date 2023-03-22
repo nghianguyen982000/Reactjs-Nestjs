@@ -16,7 +16,7 @@ import {
 
 const courseDefaultValue: CourseState = {
   courses: [],
-  course: {} as Course
+  course: {} as Course,
 };
 
 type Props = {

@@ -5,16 +5,18 @@ export interface Response<T = Record<never, never>> {
   data: T;
   success: boolean;
 }
+export interface VideoResp {
+  url: string;
+  public_id: string;
+  duration: string;
+}
 
 export const FetchVideo = (courseId: string) =>
   axios.get<Response<Video[]>>(`${URL}/videos?courseId=${courseId}`);
 export const PostVideo = (payload: FormData) =>
   axios.post(`${URL}/videos`, payload);
 export const UploadVideo = (payload: FormData) =>
-  axios.post<Response<{ url: string; public_id: string }>>(
-    `${URL}/videos/upload`,
-    payload
-  );
+  axios.post<Response<VideoResp>>(`${URL}/videos/upload`, payload);
 export const PatchVideo = (id: string, payload: FormData) =>
   axios.patch(`${URL}/videos/${id}`, payload);
 export const DestroyVideo = (public_id: string) =>

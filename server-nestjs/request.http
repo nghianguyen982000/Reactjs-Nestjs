@@ -99,16 +99,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 
 
 ###
-PATCH   http://localhost:5001/videos/1
+PATCH   http://localhost:5001/videos/18
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoibmdoaWEiLCJpYXQiOjE2NzM1Njg5MjcsImV4cCI6MTY3MzU3NDkyN30.UKzjTQ8SBgTshdN-VZjyOUV46ieHqusft-S5wrhUADU
 
 {
     "title": "string1",
-    "description": "string1",
-    "image": "string1",
-    "benefit": "string1",
-    "field": "string1"
+    "chapter": "string1",
+    "lesson": "string1",
+    "url": "http://res.cloudinary.com/dbxx9drdo/video/upload/v1679508033/dhbmwecmyizrdn0u3xkk.mp4",
+    "publicId": "dhbmwecmyizrdn0u3xkk"
 }
 
 ###

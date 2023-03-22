@@ -23,6 +23,7 @@ interface CreateVideoData {
   file: File;
   url: string;
   public_id: string;
+  duration: string;
 }
 const CUVideo = () => {
   const { status, courseId } = useParams();
@@ -44,7 +45,6 @@ const CUVideo = () => {
   const [loading, setLoading] = useState(false);
   const [loadingVideo, setLoadingVideo] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
-  console.log(watch("public_id"));
   useEffect(() => {
     if ((searchParams.get("id"), status === "update")) {
       detailVideo(searchParams.get("id") as string).then((data) => {
@@ -55,6 +55,7 @@ const CUVideo = () => {
             lesson: data.lesson,
             url: data.url,
             public_id: data.publicId,
+            duration: data.duration,
           });
         }
       });
@@ -71,6 +72,7 @@ const CUVideo = () => {
     if (resp) {
       setValue("url", resp.url);
       setValue("public_id", resp.public_id);
+      setValue("duration", resp.duration);
       setLoadingVideo(false);
     }
   };
@@ -80,6 +82,7 @@ const CUVideo = () => {
     if (resp) {
       setValue("url", "");
       setValue("public_id", "");
+      setValue("duration", "");
       setLoadingDelete(false);
     }
   };
@@ -92,6 +95,7 @@ const CUVideo = () => {
     formData.append("lesson", data.lesson);
     formData.append("url", data.url);
     formData.append("publicId", data.public_id);
+    formData.append("duration", data.duration);
     if (status === "create" && courseId) {
       formData.append("courseId", courseId);
       const resp = await createVideo(formData);

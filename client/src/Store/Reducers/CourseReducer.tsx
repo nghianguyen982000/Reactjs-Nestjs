@@ -35,7 +35,7 @@ export const courseReducer = (state: CourseState, action: CourseAction) => {
     case "DETAIL_COURSE":
       return {
         ...state,
-        course: state.courses.find((item) => payload.courses[0].id === item.id),
+        course: payload.courses[0],
       };
     case "SEARCH_COURSE":
       return {

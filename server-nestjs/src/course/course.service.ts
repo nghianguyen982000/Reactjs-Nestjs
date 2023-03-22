@@ -73,6 +73,7 @@ export class CourseService {
       where: {
         id: courseId,
       },
+      include: { videos: true },
     });
     if (!course) {
       throw new HttpException(

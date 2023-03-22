@@ -142,6 +142,7 @@ export class VideoService {
         id: videoId,
       },
     });
+    await this.destroyVideo(video.publicId);
     return {
       success: true,
       data: videoDeleted,
@@ -182,6 +183,7 @@ export class VideoService {
       data: {
         url: resp.url,
         public_id: resp.public_id,
+        duration: resp.duration,
       },
     };
   }
