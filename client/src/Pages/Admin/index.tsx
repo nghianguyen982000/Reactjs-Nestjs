@@ -3,12 +3,8 @@ import "./style.scss";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  TeamOutlined,
   ReadOutlined,
-  CommentOutlined,
-  BarChartOutlined,
   HomeOutlined,
-  KeyOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
@@ -26,7 +22,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const [colapsed, setColapsed] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const { checkLogin, auth } = useContext(AuthContext);
+  const { checkLogin, auth, logout } = useContext(AuthContext);
   useEffect(() => {
     checkLogin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,6 +38,10 @@ const Admin = () => {
 
   const toggle = () => {
     setCollapsed(!collapsed);
+  };
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -74,7 +74,7 @@ const Admin = () => {
             <Menu.Item key="1" icon={<ReadOutlined />}>
               <Link to="/admin/course">Quản lý khóa học</Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<TeamOutlined />}>
+            {/* <Menu.Item key="2" icon={<TeamOutlined />}>
               <Link to="/admin/account">Quản lý tài khoản</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<CommentOutlined />}>
@@ -85,9 +85,9 @@ const Admin = () => {
             </Menu.Item>
             <Menu.Item key="5" icon={<KeyOutlined />}>
               <span>Đổi mật khẩu</span>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item key="6" icon={<LogoutOutlined />}>
-              <span>Đăng xuất</span>
+              <span onClick={handleLogout}>Đăng xuất</span>
             </Menu.Item>
           </Menu>
         </Sider>

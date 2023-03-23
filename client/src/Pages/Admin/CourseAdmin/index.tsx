@@ -1,16 +1,16 @@
-import { Space, Select, Input, Table, Button } from "antd";
+import { Space, Input, Table, Button } from "antd";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CourseContext } from "../../../Store/Contexts/CourseContext";
 import { Course } from "../../../Types/Model/course";
 
-const { Option } = Select;
 const { Search } = Input;
 
 const CourseAdmin = () => {
   const navigate = useNavigate();
 
-  const { listCourse, data, removedCourse } = useContext(CourseContext);
+  const { listCourse, data, removedCourse, searchCourses } =
+    useContext(CourseContext);
   useEffect(() => {
     listCourse();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +49,13 @@ const CourseAdmin = () => {
       ),
     },
   ];
-
+  const onSearch = (value: string) => {
+    if (value === "") {
+      listCourse();
+    } else {
+      searchCourses(value);
+    }
+  };
   return (
     <div className="courseAd">
       <Space>
@@ -57,19 +63,10 @@ const CourseAdmin = () => {
           style={{
             width: 350,
           }}
+          onSearch={onSearch}
           placeholder="Tìm kiếm khóa học"
+          enterButton
         />
-        <Select
-          style={{
-            width: 120,
-          }}
-          size="middle"
-          defaultValue="All"
-          placeholder="Content"
-        >
-          <Option value="All">Tất cả</Option>
-          <Option>Lap trinh</Option>
-        </Select>
         <Button type="dashed" onClick={() => navigate("/admin/course/create")}>
           Tạo khóa học mới
         </Button>

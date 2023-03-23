@@ -3,11 +3,8 @@ import Logo from "../../Assets/img/logoWeb.png";
 import LogoAD from "../../Assets/img/logoUser.png";
 import {
   SearchOutlined,
-  ReadOutlined,
-  HeartOutlined,
   MenuOutlined,
   HomeOutlined,
-  KeyOutlined,
   LogoutOutlined,
   ProfileOutlined,
   UserOutlined,
@@ -21,8 +18,6 @@ import { CourseContext } from "../../Store/Contexts/CourseContext";
 const Header = () => {
   const [btnUser, setBtnUser] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [btnCourse, setBtnCourse] = useState(false);
-  const [btnFavorite, setBtnFavorite] = useState(false);
   const { auth, logout } = useContext(AuthContext);
   const { searchCourses, listCourse } = useContext(CourseContext);
   const search = useRef();
@@ -82,10 +77,6 @@ const Header = () => {
         </div>
         {
           <div className="headerDrawerFooter">
-            <div className="headerAccountDrawerItem">
-              <KeyOutlined />
-              <span> Đổi mật khẩu</span>
-            </div>
             <div className="headerAccountDrawerItem" onClick={handleLogout}>
               <LogoutOutlined />
               <span> Đăng xuất</span>
@@ -129,30 +120,10 @@ const Header = () => {
             <div className="headerUserResp">
               <UserOutlined />
             </div>
-            <div className="headerUserIcon">
-              <HeartOutlined
-                onClick={() => {
-                  setBtnFavorite(!btnFavorite);
-                  setBtnUser(false);
-                }}
-              />
-              {btnFavorite && (
-                <div className="headerUserCourse">
-                  <div className="userCourseHeader">Khóa học yêu thích</div>
-                  <div className="userCourseContent">
-                    <div className="userCourseItem">
-                      <div className="CourseItemImg"></div>
-                      <div className="CourseItemTitle">title</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
             <div className="headerUserLogo">
               <div
                 className="AuthProfileLogo"
                 onClick={() => {
-                  setBtnFavorite(false);
                   setBtnUser(!btnUser);
                 }}
               >
@@ -165,12 +136,10 @@ const Header = () => {
                       <img src={LogoAD} alt="" />
                     </div>
                     <div className="AuthProfileName">
-                      <p></p>
-                      <p>coin</p>
+                      <p>{auth.user.nameAccount}</p>
                     </div>
                   </div>
                   <div className="UserAuthContent">
-                    <p>Đổi mật khẩu</p>
                     <p onClick={handleLogout}>Đăng xuất</p>
                   </div>
                 </div>
