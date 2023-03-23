@@ -2,7 +2,7 @@ import "./style.scss";
 import { Collapse, Spin } from "antd";
 import { CheckOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CourseContext } from "../../../Store/Contexts/CourseContext";
 import { Video } from "../../../Types/Model/video";
 
@@ -10,6 +10,7 @@ const { Panel } = Collapse;
 
 const Detail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { detailCourse, data } = useContext(CourseContext);
   useEffect(() => {
     if (id) {
@@ -114,9 +115,12 @@ const Detail = () => {
           }}
         ></div>
         <div className="detailRightAction">
-          <div className="detailRightActionBtn">Thêm vào yêu thích</div>
-
-          <div className="detailRightActionBtn">Mua khóa học</div>
+          <div
+            className="detailRightActionBtn"
+            onClick={() => navigate(`/learning/${data.course?.id}`)}
+          >
+            Bắt đầu học
+          </div>
         </div>
       </div>
     </div>

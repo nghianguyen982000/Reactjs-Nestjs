@@ -64,12 +64,7 @@ const Header = () => {
               <p> coin</p>
             </div>
           </div>
-          <div className="UserAuthContent">
-            <div className="headerAccountDrawerItem">
-              <ReadOutlined />
-              <span> Các khóa học đã mua</span>
-            </div>
-          </div>
+          <div className="UserAuthContent"></div>
         </div>
 
         <div className="headerLogoDrawer">
@@ -135,30 +130,9 @@ const Header = () => {
               <UserOutlined />
             </div>
             <div className="headerUserIcon">
-              <ReadOutlined
-                onClick={() => {
-                  setBtnCourse(!btnCourse);
-                  setBtnFavorite(false);
-                  setBtnUser(false);
-                }}
-              />
-              {btnCourse && (
-                <div className="headerUserCourse">
-                  <div className="userCourseHeader">Khóa học của tôi</div>
-                  <div className="userCourseContent">
-                    <div className="userCourseItem">
-                      <div className="CourseItemImg"></div>
-                      <div className="CourseItemTitle">title</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="headerUserIcon">
               <HeartOutlined
                 onClick={() => {
                   setBtnFavorite(!btnFavorite);
-                  setBtnCourse(false);
                   setBtnUser(false);
                 }}
               />
@@ -179,7 +153,6 @@ const Header = () => {
                 className="AuthProfileLogo"
                 onClick={() => {
                   setBtnFavorite(false);
-                  setBtnCourse(false);
                   setBtnUser(!btnUser);
                 }}
               >
